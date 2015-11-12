@@ -130,10 +130,10 @@
  */
 + (id) defaultTestSuite;
 
-/// Setup method called before the invocation of each test method in the class.
+/// Setup method called before the invocation of any test method in the class.
 + (void) setUp;
 
-/// Teardown method called after the invocation of each test method in the class.
+/// Teardown method called after the invocation of every test method in the class.
 + (void) tearDown;
 
 @end

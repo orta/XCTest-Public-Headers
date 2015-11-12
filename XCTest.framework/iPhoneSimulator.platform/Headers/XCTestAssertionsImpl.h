@@ -89,10 +89,13 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
         if (a1value != nil) { \
             _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_Nil, 0, @#a1, a1value),format); \
         } \
-    }\
-    @catch (id exception) { \
+    } \
+    @catch (NSException *exception) { \
         _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_Nil, 1, @#a1, [exception reason]),format); \
-    }\
+    } \
+    @catch (...) { \
+        _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_Nil, 2, @#a1),format); \
+    } \
 })
 
 #define _XCTPrimitiveAssertNotNil(a1, format...) \
@@ -102,10 +105,13 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
         if (a1value == nil) { \
             _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotNil, 0, @#a1),format); \
         } \
-    }\
-    @catch (id exception) { \
+    } \
+    @catch (NSException *exception) { \
         _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotNil, 1, @#a1, [exception reason]),format); \
-    }\
+    } \
+    @catch (...) { \
+        _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotNil, 2, @#a1),format); \
+    } \
 })
 
 #define _XCTPrimitiveAssertEqualObjects(a1, a2, format...) \
@@ -116,10 +122,13 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
         if ((a1value != a2value) && ![a1value isEqual:a2value]) { \
             _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_EqualObjects, 0, @#a1, @#a2, a1value, a2value),format); \
         } \
-    }\
-    @catch (id exception) { \
+    } \
+    @catch (NSException *exception) { \
         _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_EqualObjects, 1, @#a1, @#a2, [exception reason]),format); \
-    }\
+    } \
+    @catch (...) { \
+        _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_EqualObjects, 2, @#a1, @#a2),format); \
+    } \
 })
 
 #define _XCTPrimitiveAssertNotEqualObjects(a1, a2, format...) \
@@ -130,10 +139,13 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
         if ((a1value == a2value) || [a1value isEqual:a2value]) { \
             _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotEqualObjects, 0, @#a1, @#a2, a1value, a2value),format); \
         } \
-    }\
-    @catch (id exception) { \
+    } \
+    @catch (NSException *exception) { \
         _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotEqualObjects, 1, @#a1, @#a2, [exception reason]),format); \
-    }\
+    } \
+    @catch (...) { \
+        _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotEqualObjects, 2, @#a1, @#a2),format); \
+    } \
 })
 
 #define _XCTPrimitiveAssertEqual(a1, a2, format...) \
@@ -141,17 +153,18 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
     @try { \
         __typeof__(a1) a1value = (a1); \
         __typeof__(a2) a2value = (a2); \
-        NSValue *a1encoded = [NSValue value:&a1value withObjCType:@encode(__typeof__(a1))]; \
-        NSValue *a2encoded = [NSValue value:&a2value withObjCType:@encode(__typeof__(a2))]; \
-        float aNaN = NAN; \
-        NSValue *aNaNencoded = [NSValue value:&aNaN withObjCType:@encode(__typeof__(aNaN))]; \
-        if ([a1encoded isEqualToValue:aNaNencoded] || [a2encoded isEqualToValue:aNaNencoded] || ![a1encoded isEqualToValue:a2encoded]) { \
+        if (a1value != a2value) { \
+            NSValue *a1encoded = [NSValue value:&a1value withObjCType:@encode(__typeof__(a1))]; \
+            NSValue *a2encoded = [NSValue value:&a2value withObjCType:@encode(__typeof__(a2))]; \
             _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_Equal, 0, @#a1, @#a2, _XCTDescriptionForValue(a1encoded), _XCTDescriptionForValue(a2encoded)),format); \
         } \
     } \
-    @catch (id exception) { \
+    @catch (NSException *exception) { \
         _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_Equal, 1, @#a1, @#a2, [exception reason]),format); \
-    }\
+    } \
+    @catch (...) { \
+        _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_Equal, 2, @#a1, @#a2),format); \
+    } \
 })
 
 #define _XCTPrimitiveAssertNotEqual(a1, a2, format...) \
@@ -159,17 +172,18 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
     @try { \
         __typeof__(a1) a1value = (a1); \
         __typeof__(a2) a2value = (a2); \
-        NSValue *a1encoded = [NSValue value:&a1value withObjCType:@encode(__typeof__(a1))]; \
-        NSValue *a2encoded = [NSValue value:&a2value withObjCType:@encode(__typeof__(a2))]; \
-        float aNaN = NAN; \
-        NSValue *aNaNencoded = [NSValue value:&aNaN withObjCType:@encode(__typeof__(aNaN))]; \
-        if ((NO == [a1encoded isEqualToValue:aNaNencoded]) && (NO == [a2encoded isEqualToValue:aNaNencoded]) && [a1encoded isEqualToValue:a2encoded]) { \
+        if (a1value == a2value) { \
+            NSValue *a1encoded = [NSValue value:&a1value withObjCType:@encode(__typeof__(a1))]; \
+            NSValue *a2encoded = [NSValue value:&a2value withObjCType:@encode(__typeof__(a2))]; \
             _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotEqual, 0, @#a1, @#a2, _XCTDescriptionForValue(a1encoded), _XCTDescriptionForValue(a2encoded)),format); \
         } \
     } \
-    @catch (id exception) { \
+    @catch (NSException *exception) { \
         _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotEqual, 1, @#a1, @#a2, [exception reason]),format); \
-    }\
+    } \
+    @catch (...) { \
+        _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotEqual, 2, @#a1, @#a2),format); \
+    } \
 })
 
 #define _XCTPrimitiveAssertEqualWithAccuracy(a1, a2, accuracy, format...) \
@@ -185,9 +199,12 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
             _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_EqualWithAccuracy, 0, @#a1, @#a2, @#accuracy, _XCTDescriptionForValue(a1encoded), _XCTDescriptionForValue(a2encoded), _XCTDescriptionForValue(accuracyencoded)), ## format); \
         } \
     } \
-    @catch (id exception) { \
+    @catch (NSException *exception) { \
         _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_EqualWithAccuracy, 1, @#a1, @#a2, @#accuracy, [exception reason]),format); \
-    }\
+    } \
+    @catch (...) { \
+        _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_EqualWithAccuracy, 2, @#a1, @#a2, @#accuracy),format); \
+    } \
 })
 
 #define _XCTPrimitiveAssertNotEqualWithAccuracy(a1, a2, accuracy, format...) \
@@ -196,16 +213,19 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
         __typeof__(a1) a1value = (a1); \
         __typeof__(a2) a2value = (a2); \
         __typeof__(accuracy) accuracyvalue = (accuracy); \
-        if ((0 != isnan(a1value)) && (0 != isnan(a2value)) && ((MAX(a1value, a2value) - MIN(a1value, a2value)) <= accuracyvalue)) { \
+        if (!isnan(a1value) && !isnan(a2value) && ((MAX(a1value, a2value) - MIN(a1value, a2value)) <= accuracyvalue)) { \
             NSValue *a1encoded = [NSValue value:&a1value withObjCType:@encode(__typeof__(a1))]; \
             NSValue *a2encoded = [NSValue value:&a2value withObjCType:@encode(__typeof__(a2))]; \
             NSValue *accuracyencoded = [NSValue value:&accuracyvalue withObjCType:@encode(__typeof__(accuracy))]; \
             _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotEqualWithAccuracy, 0, @#a1, @#a2, @#accuracy, _XCTDescriptionForValue(a1encoded), _XCTDescriptionForValue(a2encoded), _XCTDescriptionForValue(accuracyencoded)), ## format); \
         } \
     } \
-    @catch (id exception) { \
+    @catch (NSException *exception) { \
         _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotEqualWithAccuracy, 1, @#a1, @#a2, @#accuracy, [exception reason]),format); \
-    }\
+    } \
+    @catch (...) { \
+        _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotEqualWithAccuracy, 2, @#a1, @#a2, @#accuracy),format); \
+    } \
 })
 
 #define _XCTPrimitiveAssertTrue(expression, format...) \
@@ -216,9 +236,12 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
             _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_True, 0, @#expression),format); \
         } \
     } \
-    @catch (id exception) { \
+    @catch (NSException *exception) { \
         _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_True, 1, @#expression, [exception reason]),format); \
-    }\
+    } \
+    @catch (...) { \
+        _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_True, 2, @#expression),format); \
+    } \
 })
 
 #define _XCTPrimitiveAssertFalse(expression, format...) \
@@ -229,61 +252,72 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
             _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_False, 0, @#expression),format); \
         } \
     } \
-    @catch (id exception) { \
+    @catch (NSException *exception) { \
         _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_False, 1, @#expression, [exception reason]),format); \
-    }\
+    } \
+    @catch (...) { \
+        _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_False, 2, @#expression),format); \
+    } \
 })
 
 #define _XCTPrimitiveAssertThrows(expression, format...) \
 ({ \
-    BOOL __caughtException = NO; \
+    BOOL __didThrow = NO; \
     @try { \
         (expression); \
     } \
-    @catch (id exception) { \
-        __caughtException = YES; \
-    }\
-    if (!__caughtException) { \
+    @catch (...) { \
+        __didThrow = YES; \
+    } \
+    if (!__didThrow) { \
         _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_Throws, 0, @#expression),format); \
     } \
 })
 
 #define _XCTPrimitiveAssertThrowsSpecific(expression, exception_class, format...) \
 ({ \
-    BOOL __caughtException = NO; \
+    BOOL __didThrow = NO; \
     @try { \
         (expression); \
     } \
     @catch (exception_class *exception) { \
-        __caughtException = YES; \
-    }\
+        __didThrow = YES; \
+    } \
     @catch (id exception) { \
-        __caughtException = YES; \
+        __didThrow = YES; \
         _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_ThrowsSpecific, 0, @#expression, @#exception_class, [exception class], [exception reason]),format); \
-    }\
-    if (!__caughtException) { \
+    } \
+    @catch (...) { \
+        __didThrow = YES; \
         _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_ThrowsSpecific, 1, @#expression, @#exception_class),format); \
+    } \
+    if (!__didThrow) { \
+        _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_ThrowsSpecific, 2, @#expression, @#exception_class),format); \
     } \
 })
 
 #define _XCTPrimitiveAssertThrowsSpecificNamed(expression, exception_class, exception_name, format...) \
 ({ \
-    BOOL __caughtException = NO; \
+    BOOL __didThrow = NO; \
     @try { \
         (expression); \
     } \
     @catch (exception_class *exception) { \
-        __caughtException = YES; \
+        __didThrow = YES; \
         if (![exception_name isEqualToString:[exception name]]) { \
             _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_ThrowsSpecificNamed, 0, @#expression, @#exception_class, exception_name, [exception class], [exception name], [exception reason]),format); \
         } \
-    }\
+    } \
     @catch (id exception) { \
-        __caughtException = YES; \
+        __didThrow = YES; \
         _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_ThrowsSpecificNamed, 1, @#expression, @#exception_class, exception_name, [exception class], [exception name], [exception reason]),format); \
-    }\
-    if (!__caughtException) { \
+    } \
+    @catch (...) { \
+        __didThrow = YES; \
         _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_ThrowsSpecificNamed, 2, @#expression, @#exception_class, exception_name),format); \
+    } \
+    if (!__didThrow) { \
+        _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_ThrowsSpecificNamed, 3, @#expression, @#exception_class, exception_name),format); \
     } \
 })
 
@@ -292,9 +326,12 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
     @try { \
         (expression); \
     } \
-    @catch (id exception) { \
+    @catch (NSException *exception) { \
         _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NoThrow, 0, @#expression, [exception reason]),format); \
-    }\
+    } \
+    @catch (...) { \
+        _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NoThrow, 1, @#expression),format); \
+    } \
 })
 
 #define _XCTPrimitiveAssertNoThrowSpecific(expression, exception_class, format...) \
@@ -307,7 +344,7 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
     } \
     @catch (...) { \
         ; \
-    }\
+    } \
 })
 
 #define _XCTPrimitiveAssertNoThrowSpecificNamed(expression, exception_class, exception_name, format...) \
@@ -319,8 +356,8 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
         if ([exception_name isEqualToString:[exception name]]) { \
             _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NoThrowSpecificNamed, 0, @#expression, @#exception_class, exception_name, [exception class], [exception name], [exception reason]),format); \
         } \
-    }\
+    } \
     @catch (...) { \
         ; \
-    }\
+    } \
 })

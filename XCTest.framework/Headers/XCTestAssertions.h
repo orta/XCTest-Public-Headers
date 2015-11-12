@@ -97,7 +97,7 @@
     _XCTPrimitiveAssertNotEqualObjects(a1, a2, ## format)
 
 /// \def XCTAssertEqual(a1, a2, format...)
-/// \brief Generates a failure when a1 is not equal to a2. This test is for C scalars, structs and unions.
+/// \brief Generates a failure when a1 is not equal to a2. This test is for C scalars.
 /// \param a1 The first argument.
 /// \param a2 The second argument.
 /// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
@@ -106,7 +106,7 @@
     _XCTPrimitiveAssertEqual(a1, a2, ## format)
 
 /// \def XCTAssertNotEqual(a1, a2, format...)
-/// \brief Generates a failure when a1 is equal to a2. This test is for C scalars, structs and unions.
+/// \brief Generates a failure when a1 is equal to a2. This test is for C scalars.
 /// \param a1 The first argument.
 /// \param a2 The second argument.
 /// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
