@@ -39,8 +39,10 @@ NS_CLASS_AVAILABLE(NA, 9_0)
 /*! The current device. */
 + (XCUIDevice *)sharedDevice;
 
+#if TARGET_OS_IOS
 /*! The orientation of the device. */
 @property (nonatomic) UIDeviceOrientation orientation;
+#endif
 
 /*! Simulates the user pressing a physical button. */
 - (void)pressButton:(XCUIDeviceButton)button;
