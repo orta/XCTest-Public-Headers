@@ -363,7 +363,7 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
 ({ \
     BOOL __didThrow = NO; \
     @try { \
-        (expression); \
+        (void)(expression); \
     } \
     @catch (...) { \
         __didThrow = YES; \
@@ -377,7 +377,7 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
 ({ \
     BOOL __didThrow = NO; \
     @try { \
-        (expression); \
+        (void)(expression); \
     } \
     @catch (exception_class *exception) { \
         __didThrow = YES; \
@@ -399,7 +399,7 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
 ({ \
     BOOL __didThrow = NO; \
     @try { \
-        (expression); \
+        (void)(expression); \
     } \
     @catch (exception_class *exception) { \
         __didThrow = YES; \
@@ -423,7 +423,7 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
 #define _XCTPrimitiveAssertNoThrow(test, expression, expressionStr, ...) \
 ({ \
     @try { \
-        (expression); \
+        (void)(expression); \
     } \
     @catch (NSException *exception) { \
         _XCTRegisterFailure(test, _XCTFailureDescription(_XCTAssertion_NoThrow, 0, expressionStr, [exception reason]), __VA_ARGS__); \
@@ -436,7 +436,7 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
 #define _XCTPrimitiveAssertNoThrowSpecific(test, expression, expressionStr, exception_class, ...) \
 ({ \
     @try { \
-        (expression); \
+        (void)(expression); \
     } \
     @catch (exception_class *exception) { \
         _XCTRegisterFailure(test, _XCTFailureDescription(_XCTAssertion_NoThrowSpecific, 0, expressionStr, @#exception_class, [exception class], [exception reason]), __VA_ARGS__); \
@@ -449,7 +449,7 @@ XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
 #define _XCTPrimitiveAssertNoThrowSpecificNamed(test, expression, expressionStr, exception_class, exception_name, ...) \
 ({ \
     @try { \
-        (expression); \
+        (void)(expression); \
     } \
     @catch (exception_class *exception) { \
         if ([exception_name isEqualToString:[exception name]]) { \
