@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013 Apple Inc. All rights reserved.
+// Copyright (c) 2013-2014 Apple Inc. All rights reserved.
 //
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -29,54 +29,49 @@
 // 
 // This notice may not be removed from this file.
 
-#import <XCTest/XCTestCase.h>
+#import <XCTest/XCAbstractTest.h>
 
-/*
- A TestSuite is a Composite of Tests. It runs a collection of test cases. Here is an example using the dynamic test definition.
+/*!
+ * @class XCTestSuite
+ * A concrete subclass of XCTest, XCTestSuite is a collection of test cases. Suites
+ * are usually managed by the IDE, but XCTestSuite also provides API for dynamic test
+ * and suite management:
+
+    XCTestSuite *suite = [XCTestSuite testSuiteWithName:@"My tests"];
+    [suite addTest:[MathTest testCaseWithSelector:@selector(testAdd)]];
+    [suite addTest:[MathTest testCaseWithSelector:@selector(testDivideByZero)]];
+
+ * Alternatively, a test suite can extract the tests to be run automatically. To do so,
+ * pass the class of your test case class to the suite's constructor:
  
- !{
- XCTestSuite *suite= [XCTestSuite testSuiteWithName:@"My tests"];
- [suite addTest: [MathTest testCaseWithSelector:@selector(testAdd)]];
- [suite addTest: [MathTest testCaseWithSelector:@selector(testDivideByZero)]];
- }
+    XCTestSuite *suite = [XCTestSuite testSuiteForTestCaseClass:[MathTest class]];
+
+ * This creates a suite with all the methods starting with "test" that take no arguments.
+ * Also, a test suite of all the test cases found in the runtime can be created automatically:
  
- Alternatively, a TestSuite can extract the tests to be run automatically. To do so you pass the class of your TestCase class to the TestSuite constructor.
- 
- !{
- XCTestSuite *suite= [XCTestSuite testSuiteForTestCaseClass:[MathTest class]];
- }
- 
- This  creates a suite with all the methods starting with "test" that take no arguments.
- 
- 
- And finally, a TestSuite of all the test cases found in the runtime can be created automatically:
- 
- !{
- XCTestSuite *suite = [XCTestSuite defaultTestSuite];
- }
- 
- This  creates a suite of suites with all the XCTestCase subclasses methods starting with "test" that take no arguments.
+    XCTestSuite *suite = [XCTestSuite defaultTestSuite];
+
+ * This creates a suite of suites with all the XCTestCase subclasses methods that start
+ * with "test" and take no arguments.
  */
-
 @interface XCTestSuite : XCTest {
 #ifndef __OBJC2__
 @private
-    NSString *name;
-    NSMutableArray *tests;
+    NSString *_name;
+    NSMutableArray *_tests;
 #endif
 }
 
-+ (id) defaultTestSuite;
-+ (id) testSuiteForBundlePath:(NSString *) bundlePath;
-+ (id) testSuiteForTestCaseWithName:(NSString *) aName;
-+ (id) testSuiteForTestCaseClass:(Class) aClass;
++ (id)defaultTestSuite;
++ (id)testSuiteForBundlePath:(NSString *)bundlePath;
++ (id)testSuiteForTestCaseWithName:(NSString *)name;
++ (id)testSuiteForTestCaseClass:(Class)testCaseClass;
 
-+ (id) testSuiteWithName:(NSString *) aName;
-- (id) initWithName:(NSString *) aName;
++ (id)testSuiteWithName:(NSString *)name;
+- (id)initWithName:(NSString *)name;
 
-- (void) addTest:(XCTest *) aTest;
-- (void) addTestsEnumeratedBy:(NSEnumerator *) anEnumerator;
+- (void)addTest:(XCTest *)test;
 
-- (NSArray *) tests;
+@property (readonly, copy) NSArray *tests;
 
 @end

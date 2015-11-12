@@ -33,31 +33,18 @@
 
 #import <XCTest/XCTestDefines.h>
 
-/*
- If you are implementing your own test tool, call this function from your tool's main() function.
- */
-XCT_EXPORT int XCTSelfTestMain(void);
+XCT_EXPORT int XCTSelfTestMain(void) DEPRECATED_ATTRIBUTE;
 
+DEPRECATED_ATTRIBUTE
 @interface XCTestProbe : NSObject
 
-+ (BOOL) isTesting;
++ (BOOL)isTesting;
 
 @end
 
-/*
- The XCTestedUnit user default specifies the path of bundle being tested.
- */
-XCT_EXPORT NSString * const XCTestedUnitPath;
-
-/*
- The XCTest user default represented by XCTestScopeKey specifies the tests to run.  It can be either one of the special keys All, None or Self, or a comma-separated list of test suite or test case names with optional test method names.
- */
-XCT_EXPORT NSString * const XCTestScopeKey;
-XCT_EXPORT NSString * const XCTestScopeAll;
-XCT_EXPORT NSString * const XCTestScopeNone;
-XCT_EXPORT NSString * const XCTestScopeSelf;
-
-/*
- Setting the XCTestTool user default to YES indicates to XCTest that it's running in the context of a test rig equivalent to otest, rather than in the context of an applciation that has either loaded or been injected with a test bundle.
- */
-XCT_EXPORT NSString * const XCTestToolKey;
+XCT_EXPORT NSString * const XCTestedUnitPath DEPRECATED_ATTRIBUTE;
+XCT_EXPORT NSString * const XCTestScopeKey DEPRECATED_ATTRIBUTE;
+XCT_EXPORT NSString * const XCTestScopeAll DEPRECATED_ATTRIBUTE;
+XCT_EXPORT NSString * const XCTestScopeNone DEPRECATED_ATTRIBUTE;
+XCT_EXPORT NSString * const XCTestScopeSelf DEPRECATED_ATTRIBUTE;
+XCT_EXPORT NSString * const XCTestToolKey DEPRECATED_ATTRIBUTE;

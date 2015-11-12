@@ -29,21 +29,22 @@
 // 
 // This notice may not be removed from this file.
 
-#import <XCTest/XCTestObserver.h>
+#import <Foundation/Foundation.h>
 
-/*! An XCTestLog is an XCTestObserver that produces a textual log of testing progress.
- 
- XCTestLog normally writes its output to stderr. A subclass may override -logFileHandle to return an alternate NSFileHandle, or may override -testLogWithFormat:arguments: to write logged test results elsewhere.
- */
-@interface XCTestLog : XCTestObserver
+#import <XCTest/XCTestDefines.h>
 
-/*! The file handle to which XCTestLog will write. */
-- (NSFileHandle *)logFileHandle;
+XCT_EXPORT int XCTSelfTestMain(void) DEPRECATED_ATTRIBUTE;
 
-/*! Logs test results with the given format specifier and arguments; subclasses should override -testLogWithFormat:arguments: and not this method. */
-- (void) testLogWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
+DEPRECATED_ATTRIBUTE
+@interface XCTestProbe : NSObject
 
-/*! Logs test with the given \a format and \a arguments to the -logFileHandle. */
-- (void) testLogWithFormat:(NSString *)format arguments:(va_list)arguments NS_FORMAT_FUNCTION(1,0);
++ (BOOL)isTesting;
 
 @end
+
+XCT_EXPORT NSString * const XCTestedUnitPath DEPRECATED_ATTRIBUTE;
+XCT_EXPORT NSString * const XCTestScopeKey DEPRECATED_ATTRIBUTE;
+XCT_EXPORT NSString * const XCTestScopeAll DEPRECATED_ATTRIBUTE;
+XCT_EXPORT NSString * const XCTestScopeNone DEPRECATED_ATTRIBUTE;
+XCT_EXPORT NSString * const XCTestScopeSelf DEPRECATED_ATTRIBUTE;
+XCT_EXPORT NSString * const XCTestToolKey DEPRECATED_ATTRIBUTE;

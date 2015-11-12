@@ -30,6 +30,10 @@
 
 #import <SenTestingKit/SenTestingUtilities.h>
 
+#if !defined(SENTEST_IGNORE_DEPRECATION_WARNING)
+#warning OCUnit (SenTestingKit) is deprecated, please convert to XCTest.
+#endif
+
 #undef STFail
 
 #undef STAssertNil

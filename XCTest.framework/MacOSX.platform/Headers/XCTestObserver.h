@@ -29,37 +29,27 @@
 // 
 // This notice may not be removed from this file.
 
-#import <Foundation/Foundation.h>
+#import <XCTest/XCTestDefines.h>
 
 @class XCTestRun;
 
-/*
- An abstract Test class. The XCTest, XCTestCase and XCTestSuite classes implement a Composite pattern.
+/*!
+ * XCTestObserver is deprecated.
  */
-@interface XCTest : NSObject
+DEPRECATED_ATTRIBUTE
+@interface XCTestObserver : NSObject
 
-/*
- Number of test cases
- */
-- (NSUInteger) testCaseCount;
-- (BOOL) isEmpty;
-
-/*
- Test's name
- */
-- (NSString *) name;
-
-/*
- Creating test runs
- */
-- (Class) testRunClass;
-- (void) performTest:(XCTestRun *) aRun;
-- (XCTestRun *) run;
-
-/// Setup method called before the invocation of each test method in the class.
-- (void) setUp;
-
-/// Teardown method called after the invocation of each test method in the class.
-- (void) tearDown;
+- (void)startObserving;
+- (void)stopObserving;
+- (void)testSuiteDidStart:(XCTestRun *)testRun;
+- (void)testSuiteDidStop:(XCTestRun *)testRun;
+- (void)testCaseDidStart:(XCTestRun *)testRun;
+- (void)testCaseDidStop:(XCTestRun *)testRun;
+- (void)testCaseDidFail:(XCTestRun *)testRun withDescription:(NSString *)description inFile:(NSString *)filePath atLine:(NSUInteger)lineNumber;
 
 @end
+
+/*!
+ * XCTestObserverClassKey is deprecated.
+ */
+XCT_EXPORT NSString * const XCTestObserverClassKey DEPRECATED_ATTRIBUTE;

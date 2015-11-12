@@ -29,35 +29,12 @@
 // 
 // This notice may not be removed from this file.
 
-#import <Foundation/Foundation.h>
+#import <XCTest/XCTestRun.h>
 
-#import <XCTest/XCTestDefines.h>
+@class XCTestCase;
 
-/*
- If you are implementing your own test tool, call this function from your tool's main() function.
- */
-XCT_EXPORT int XCTSelfTestMain(void);
+@interface XCTestCaseRun : XCTestRun
 
-@interface XCTestProbe : NSObject
-
-+ (BOOL) isTesting;
+- (void)recordFailureInTest:(XCTestCase *)testCase withDescription:(NSString *)description inFile:(NSString *)filePath atLine:(NSUInteger)lineNumber expected:(BOOL)expected DEPRECATED_ATTRIBUTE;
 
 @end
-
-/*
- The XCTestedUnit user default specifies the path of bundle being tested.
- */
-XCT_EXPORT NSString * const XCTestedUnitPath;
-
-/*
- The XCTest user default represented by XCTestScopeKey specifies the tests to run.  It can be either one of the special keys All, None or Self, or a comma-separated list of test suite or test case names with optional test method names.
- */
-XCT_EXPORT NSString * const XCTestScopeKey;
-XCT_EXPORT NSString * const XCTestScopeAll;
-XCT_EXPORT NSString * const XCTestScopeNone;
-XCT_EXPORT NSString * const XCTestScopeSelf;
-
-/*
- Setting the XCTestTool user default to YES indicates to XCTest that it's running in the context of a test rig equivalent to otest, rather than in the context of an applciation that has either loaded or been injected with a test bundle.
- */
-XCT_EXPORT NSString * const XCTestToolKey;

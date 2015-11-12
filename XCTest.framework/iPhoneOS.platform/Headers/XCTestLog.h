@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013 Apple Inc. All rights reserved.
+// Copyright (c) 2013-2014 Apple Inc. All rights reserved.
 //
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -31,19 +31,19 @@
 
 #import <XCTest/XCTestObserver.h>
 
-/*! An XCTestLog is an XCTestObserver that produces a textual log of testing progress.
- 
- XCTestLog normally writes its output to stderr. A subclass may override -logFileHandle to return an alternate NSFileHandle, or may override -testLogWithFormat:arguments: to write logged test results elsewhere.
+/*!
+ * XCTestLog is deprecated.
  */
+
+DEPRECATED_ATTRIBUTE
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @interface XCTestLog : XCTestObserver
+#pragma clang diagnostic pop
 
-/*! The file handle to which XCTestLog will write. */
-- (NSFileHandle *)logFileHandle;
-
-/*! Logs test results with the given format specifier and arguments; subclasses should override -testLogWithFormat:arguments: and not this method. */
-- (void) testLogWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
-
-/*! Logs test with the given \a format and \a arguments to the -logFileHandle. */
-- (void) testLogWithFormat:(NSString *)format arguments:(va_list)arguments NS_FORMAT_FUNCTION(1,0);
+@property (readonly, strong) NSFileHandle *logFileHandle;
+- (void)testLogWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
+- (void)testLogWithFormat:(NSString *)format arguments:(va_list)arguments NS_FORMAT_FUNCTION(1,0);
 
 @end
+

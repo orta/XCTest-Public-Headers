@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013 Apple Inc. All rights reserved.
+// Copyright (c) 2013-2014 Apple Inc. All rights reserved.
 //
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -29,45 +29,17 @@
 // 
 // This notice may not be removed from this file.
 
+#import <XCTest/XCAbstractTest.h>
+#import <XCTest/XCTestAssertions.h>
+#import <XCTest/XCTestAssertionsImpl.h>
 #import <XCTest/XCTestCase.h>
-
-/*
- A TestResult collects the results of executing a test. The test framework distinguishes between %failures which are anticipated and checked for problems like a test that failed; and %{unexpected failures} which are unforeseen (catastrophic) problems, like an exception.
- */
-@interface XCTestRun : NSObject {
-#ifndef __OBJC2__
-@private
-    NSTimeInterval startDate;
-    NSTimeInterval stopDate;
-    XCTest * test;
-#endif
-}
-
-+ (id) testRunWithTest:(XCTest *) aTest;
-- (id) initWithTest:(XCTest *) aTest;
-
-- (XCTest *) test;
-
-- (void) start;
-- (void) stop;
-
-- (NSDate *) startDate;
-- (NSDate *) stopDate;
-- (NSTimeInterval) totalDuration; 
-- (NSTimeInterval) testDuration;
-
-/// The number of test cases in the run.
-- (NSUInteger) testCaseCount;
-
-/// The number of test failures recorded during the run.
-- (NSUInteger) failureCount;
-
-/// The number of uncaught exceptions recorded during the run.
-- (NSUInteger) unexpectedExceptionCount;
-
-/// The total number of test failures and uncaught exceptions recorded during the run.
-- (NSUInteger) totalFailureCount;
-
-- (BOOL) hasSucceeded;
-
-@end
+#import <XCTest/XCTextCase+AsynchronousTesting.h>
+#import <XCTest/XCTestCaseRun.h>
+#import <XCTest/XCTestDefines.h>
+#import <XCTest/XCTestErrors.h>
+#import <XCTest/XCTestLog.h>
+#import <XCTest/XCTestObserver.h>
+#import <XCTest/XCTestProbe.h>
+#import <XCTest/XCTestRun.h>
+#import <XCTest/XCTestSuite.h>
+#import <XCTest/XCTestSuiteRun.h>

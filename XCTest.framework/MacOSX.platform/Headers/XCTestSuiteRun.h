@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013 Apple Inc. All rights reserved.
+// Copyright (c) 2013-2014 Apple Inc. All rights reserved.
 //
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -30,16 +30,16 @@
 // This notice may not be removed from this file.
 
 #import <XCTest/XCTestRun.h>
-#import <XCTest/XCTestDefines.h>
 
-@interface XCTestCaseRun : XCTestRun {
+@interface XCTestSuiteRun : XCTestRun {
 #ifndef __OBJC2__
 @private
-    NSUInteger failureCount;
-    NSUInteger unexpectedExceptionCount;
+    NSMutableArray *_testRuns;
 #endif
 }
 
-- (void) recordFailureInTest:(XCTestCase *)testCase withDescription:(NSString *)description inFile:(NSString *) filePath atLine:(NSUInteger) lineNumber expected:(BOOL)expected;
+@property (readonly, copy) NSArray *testRuns;
+
+- (void)addTestRun:(XCTestRun *)testRun;
 
 @end

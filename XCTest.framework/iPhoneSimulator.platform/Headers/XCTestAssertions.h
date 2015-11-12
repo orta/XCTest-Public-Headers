@@ -31,159 +31,217 @@
 
 #import <XCTest/XCTestAssertionsImpl.h>
 
-/// \def XCTFail(format...)
-/// \brief Generates a failure unconditionally.
-/// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
-/// \param ... The arguments displayed in the format string.
-#define XCTFail(format...) \
-    _XCTPrimitiveFail(format)
+/*!
+ * @function XCTFail(...)
+ * Generates a failure unconditionally.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTFail(...) \
+    _XCTPrimitiveFail(self, __VA_ARGS__)
 
-/// \def XCTAssertNil(a1, format...)
-/// \brief Generates a failure when \a1 is not nil.
-/// \param a1 The object that is tested.
-/// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
-/// \param ... The arguments displayed in the format string.
-#define XCTAssertNil(a1, format...) \
-    _XCTPrimitiveAssertNil(a1, ## format)
+/*!
+ * @define XCTAssertNil(expression, ...)
+ * Generates a failure when ((\a expression) != nil).
+ * @param expression An expression of id type.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertNil(expression, ...) \
+    _XCTPrimitiveAssertNil(self, expression, @#expression, __VA_ARGS__)
 
-/// \def XCTAssertNotNil(a1, format...)
-/// \brief Generates a failure when a1 is nil.
-/// \param a1 The object that is tested.
-/// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
-/// \param ... The arguments displayed in the format string.
-#define XCTAssertNotNil(a1, format...) \
-    _XCTPrimitiveAssertNotNil(a1, ## format)
+/*!
+ * @define XCTAssertNotNil(expression, ...)
+ * Generates a failure when ((\a expression) == nil).
+ * @param expression An expression of id type.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertNotNil(expression, ...) \
+    _XCTPrimitiveAssertNotNil(self, expression, @#expression, __VA_ARGS__)
 
-/// \def XCTAssert(expression, format...)
-/// \brief Generates a failure when expression evaluates to false.
-/// \param expression The expression that is tested.
-/// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
-/// \param ... The arguments displayed in the format string.
-#define XCTAssert(expression, format...) \
-    _XCTPrimitiveAssertTrue(expression, ## format)
+/*!
+ * @define XCTAssert(expression, ...)
+ * Generates a failure when ((\a expression) == false).
+ * @param expression An expression of boolean type.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssert(expression, ...) \
+    _XCTPrimitiveAssertTrue(self, expression, @#expression, __VA_ARGS__)
 
-/// \def XCTAssertTrue(expression, format...)
-/// \brief Generates a failure when expression evaluates to false.
-/// \param expression The expression that is tested.
-/// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
-/// \param ... The arguments displayed in the format string.
-#define XCTAssertTrue(expression, format...) \
-    _XCTPrimitiveAssertTrue(expression, ## format)
+/*!
+ * @define XCTAssertTrue(expression, ...)
+ * Generates a failure when ((\a expression) == false).
+ * @param expression An expression of boolean type.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertTrue(expression, ...) \
+    _XCTPrimitiveAssertTrue(self, expression, @#expression, __VA_ARGS__)
 
-/// \def XCTAssertFalse(expression, format...)
-/// \brief Generates a failure when the expression evaluates to true.
-/// \param expression The expression that is tested.
-/// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
-/// \param ... The arguments displayed in the format string.
-#define XCTAssertFalse(expression, format...) \
-    _XCTPrimitiveAssertFalse(expression, ## format)
+/*!
+ * @define XCTAssertFalse(expression, ...)
+ * Generates a failure when ((\a expression) != false).
+ * @param expression An expression of boolean type.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertFalse(expression, ...) \
+    _XCTPrimitiveAssertFalse(self, expression, @#expression, __VA_ARGS__)
 
-/// \def XCTAssertEqualObjects(a1, a2, format...)
-/// \brief Generates a failure when !{ [a1 isEqual:a2] } is false (or one is nil and the other is not).
-/// \param a1 The first object argument.
-/// \param a2 The second object argument.
-/// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
-/// \param ... The arguments displayed in the format string.
-#define XCTAssertEqualObjects(a1, a2, format...) \
-    _XCTPrimitiveAssertEqualObjects(a1, a2, ## format)
+/*!
+ * @define XCTAssertEqualObjects(expression1, expression2, ...)
+ * Generates a failure when ((\a expression1) not equal to (\a expression2)).
+ * @param expression1 An expression of id type.
+ * @param expression2 An expression of id type.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertEqualObjects(expression1, expression2, ...) \
+    _XCTPrimitiveAssertEqualObjects(self, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
 
-/// \def XCTAssertNotEqualObjects(a1, a2, format...)
-/// \brief Generates a failure when { [a1 isEqual:a2] } is false (or both are nil).
-/// \param a1 The first object argument.
-/// \param a2 The second object argument.
-/// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
-/// \param ... The arguments displayed in the format string.
-#define XCTAssertNotEqualObjects(a1, a2, format...) \
-    _XCTPrimitiveAssertNotEqualObjects(a1, a2, ## format)
+/*!
+ * @define XCTAssertNotEqualObjects(expression1, expression2, ...)
+ * Generates a failure when ((\a expression1) equal to (\a expression2)).
+ * @param expression1 An expression of id type.
+ * @param expression2 An expression of id type.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertNotEqualObjects(expression1, expression2, ...) \
+    _XCTPrimitiveAssertNotEqualObjects(self, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
 
-/// \def XCTAssertEqual(a1, a2, format...)
-/// \brief Generates a failure when a1 is not equal to a2. This test is for C scalars.
-/// \param a1 The first argument.
-/// \param a2 The second argument.
-/// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
-/// \param ... The arguments displayed in the format string.
-#define XCTAssertEqual(a1, a2, format...) \
-    _XCTPrimitiveAssertEqual(a1, a2, ## format)
+/*!
+ * @define XCTAssertEqual(expression1, expression2, ...)
+ * Generates a failure when ((\a expression1) != (\a expression2)).
+ * @param expression1 An expression of C scalar type.
+ * @param expression2 An expression of C scalar type.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertEqual(expression1, expression2, ...) \
+    _XCTPrimitiveAssertEqual(self, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
 
-/// \def XCTAssertNotEqual(a1, a2, format...)
-/// \brief Generates a failure when a1 is equal to a2. This test is for C scalars.
-/// \param a1 The first argument.
-/// \param a2 The second argument.
-/// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
-/// \param ... The arguments displayed in the format string.
-#define XCTAssertNotEqual(a1, a2, format...) \
-    _XCTPrimitiveAssertNotEqual(a1, a2, ## format)
+/*!
+ * @define XCTAssertNotEqual(expression1, expression2, ...)
+ * Generates a failure when ((\a expression1) == (\a expression2)).
+ * @param expression1 An expression of C scalar type.
+ * @param expression2 An expression of C scalar type.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertNotEqual(expression1, expression2, ...) \
+    _XCTPrimitiveAssertNotEqual(self, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
 
-/// \def XCTAssertEqualWithAccuracy(a1, a2, format...)
-/// \brief Generates a failure when a1 is not equal to a2 within + or - accuracy. This test is for scalars such as floats and doubles, where small differences could make these items not exactly equal, but works for all scalars.
-/// \param a1 The first argument.
-/// \param a2 The second argument.
-/// \param accuracy The maximum difference between a1 and a2 for these values to be considered equal.
-/// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
-/// \param ... The arguments displayed in the format string.
-#define XCTAssertEqualWithAccuracy(a1, a2, accuracy, format...) \
-    _XCTPrimitiveAssertEqualWithAccuracy(a1, a2, accuracy, ## format)
+/*!
+ * @define XCTAssertEqualWithAccuracy(expression1, expression2, accuracy, ...)
+ * Generates a failure when (difference between (\a expression1) and (\a expression2) is > (\a accuracy))).
+ * @param expression1 An expression of C scalar type.
+ * @param expression2 An expression of C scalar type.
+ * @param accuracy An expression of C scalar type describing the maximum difference between \a expression1 and \a expression2 for these values to be considered equal.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertEqualWithAccuracy(expression1, expression2, accuracy, ...) \
+    _XCTPrimitiveAssertEqualWithAccuracy(self, expression1, @#expression1, expression2, @#expression2, accuracy, @#accuracy, __VA_ARGS__)
 
-/// \def XCTAssertNotEqualWithAccuracy(a1, a2, format...)
-/// \brief Generates a failure when a1 is equal to a2 within + or - accuracy. This test is for scalars such as floats and doubles, where small differences could make these items not exactly equal, but works for all scalars.
-/// \param a1 The first argument.
-/// \param a2 The second argument.
-/// \param accuracy The maximum difference between a1 and a2 for these values to be considered equal.
-/// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
-/// \param ... The arguments displayed in the format string.
-#define XCTAssertNotEqualWithAccuracy(a1, a2, accuracy, format...) \
-    _XCTPrimitiveAssertNotEqualWithAccuracy(a1, a2, accuracy, ## format)
+/*!
+ * @define XCTAssertNotEqualWithAccuracy(expression1, expression2, accuracy, ...)
+ * Generates a failure when (difference between (\a expression1) and (\a expression2) is <= (\a accuracy)).
+ * @param expression1 An expression of C scalar type.
+ * @param expression2 An expression of C scalar type.
+ * @param accuracy An expression of C scalar type describing the maximum difference between \a expression1 and \a expression2 for these values to be considered equal.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertNotEqualWithAccuracy(expression1, expression2, accuracy, ...) \
+    _XCTPrimitiveAssertNotEqualWithAccuracy(self, expression1, @#expression1, expression2, @#expression2, accuracy, @#accuracy, __VA_ARGS__)
 
-/// \def XCTAssertThrows(expression, format...)
-/// \brief Generates a failure when expression does not throw an exception.
-/// \param expression The expression that is evaluated.
-/// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
-/// \param ... The arguments displayed in the format string.
-#define XCTAssertThrows(expression, format...) \
-    _XCTPrimitiveAssertThrows(expression, ## format)
+/*!
+ * @define XCTAssertGreaterThan(expression1, expression2, ...)
+ * Generates a failure when ((\a expression1) <= (\a expression2)).
+ * @param expression1 An expression of C scalar type.
+ * @param expression2 An expression of C scalar type.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertGreaterThan(expression1, expression2, ...) \
+    _XCTPrimitiveAssertGreaterThan(self, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
 
-/// \def XCTAssertThrowsSpecific(expression, specificException, format...)
-/// \brief Generates a failure when expression does not throw an exception of a specific class.
-/// \param expression The expression that is evaluated.
-/// \param specificException The specified class of the exception.
-/// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
-/// \param ... The arguments displayed in the format string.
-#define XCTAssertThrowsSpecific(expression, specificException, format...) \
-    _XCTPrimitiveAssertThrowsSpecific(expression, specificException, ## format)
+/*!
+ * @define XCTAssertGreaterThanOrEqual(expression1, expression2, ...)
+ * Generates a failure when ((\a expression1) < (\a expression2)).
+ * @param expression1 An expression of C scalar type.
+ * @param expression2 An expression of C scalar type.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertGreaterThanOrEqual(expression1, expression2, ...) \
+    _XCTPrimitiveAssertGreaterThanOrEqual(self, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
 
-/// \def XCTAssertThrowsSpecificNamed(expression, specificException, exception_name, format...)
-/// \brief Generates a failure when expression does not throw an exception of a specific class with a specific name.  Useful for those frameworks like AppKit or Foundation that throw generic NSException w/specific names (NSInvalidArgumentException, etc).
-/// \param expression The expression that is evaluated.
-/// \param specificException The specified class of the exception.
-/// \param exception_name The name of the specified exception.
-/// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
-/// \param ... The arguments displayed in the format string.
-#define XCTAssertThrowsSpecificNamed(expression, specificException, exception_name, format...) \
-    _XCTPrimitiveAssertThrowsSpecificNamed(expression, specificException, exception_name, ## format)
+/*!
+ * @define XCTAssertLessThan(expression1, expression2, ...)
+ * Generates a failure when ((\a expression1) >= (\a expression2)).
+ * @param expression1 An expression of C scalar type.
+ * @param expression2 An expression of C scalar type.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertLessThan(expression1, expression2, ...) \
+    _XCTPrimitiveAssertLessThan(self, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
 
-/// \def XCTAssertNoThrow(expression, format...)
-/// \brief Generates a failure when expression does throw an exception.
-/// \param expression The expression that is evaluated.
-/// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
-/// \param ... The arguments displayed in the format string.
-#define XCTAssertNoThrow(expression, format...) \
-    _XCTPrimitiveAssertNoThrow(expression, ## format)
+/*!
+ * @define XCTAssertLessThanOrEqual(expression1, expression2, ...)
+ * Generates a failure when ((\a expression1) > (\a expression2)).
+ * @param expression1 An expression of C scalar type.
+ * @param expression2 An expression of C scalar type.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertLessThanOrEqual(expression1, expression2, ...) \
+    _XCTPrimitiveAssertLessThanOrEqual(self, expression1, @#expression1, expression2, @#expression2, __VA_ARGS__)
 
-/// \def XCTAssertNoThrowSpecific(expression, specificException, format...)
-/// \brief Generates a failure when expression does throw an exception of the specitied class. Any other exception is okay (i.e. does not generate a failure).
-/// \param expression The expression that is evaluated.
-/// \param specificException The specified class of the exception.
-/// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
-/// \param ... The arguments displayed in the format string.
-#define XCTAssertNoThrowSpecific(expression, specificException, format...) \
-    _XCTPrimitiveAssertNoThrowSpecific(expression, specificException, ## format)
+/*!
+ * @define XCTAssertThrows(expression, ...)
+ * Generates a failure when ((\a expression) does not throw).
+ * @param expression An expression.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertThrows(expression, ...) \
+    _XCTPrimitiveAssertThrows(self, expression, @#expression, __VA_ARGS__)
 
-/// \def XCTAssertNoThrowSpecificNamed(expression, specificException, exception_name, format...)
-/// \brief Generates a failure when expression does throw an exception of a specific class with a specific name.  Useful for those frameworks like AppKit or Foundation that throw generic NSException w/specific names (NSInvalidArgumentException, etc).
-/// \param expression The expression that is evaluated.
-/// \param specificException The specified class of the exception.
-/// \param exception_name The name of the specified exception.
-/// \param format An NSString object that contains a printf-style string containing an error message describing the failure condition and placeholders for the arguments.
-/// \param ... The arguments displayed in the format string.
-#define XCTAssertNoThrowSpecificNamed(expression, specificException, exception_name, format...) \
-    _XCTPrimitiveAssertNoThrowSpecificNamed(expression, specificException, exception_name, ## format)
+/*!
+ * @define XCTAssertThrowsSpecific(expression, exception_class, ...)
+ * Generates a failure when ((\a expression) does not throw \a exception_class).
+ * @param expression An expression.
+ * @param exception_class The class of the exception. Must be NSException, or a subclass of NSException.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertThrowsSpecific(expression, exception_class, ...) \
+    _XCTPrimitiveAssertThrowsSpecific(self, expression, @#expression, exception_class, __VA_ARGS__)
+
+/*!
+ * @define XCTAssertThrowsSpecificNamed(expression, exception_class, exception_name, ...)
+ * Generates a failure when ((\a expression) does not throw \a exception_class with \a exception_name).
+ * @param expression An expression.
+ * @param exception_class The class of the exception. Must be NSException, or a subclass of NSException.
+ * @param exception_name The name of the exception.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertThrowsSpecificNamed(expression, exception_class, exception_name, ...) \
+    _XCTPrimitiveAssertThrowsSpecificNamed(self, expression, @#expression, exception_class, exception_name, __VA_ARGS__)
+
+/*!
+ * @define XCTAssertNoThrow(expression, ...)
+ * Generates a failure when ((\a expression) throws).
+ * @param expression An expression.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertNoThrow(expression, ...) \
+    _XCTPrimitiveAssertNoThrow(self, expression, @#expression, __VA_ARGS__)
+
+/*!
+ * @define XCTAssertNoThrowSpecific(expression, exception_class, ...)
+ * Generates a failure when ((\a expression) throws \a exception_class).
+ * @param expression An expression.
+ * @param exception_class The class of the exception. Must be NSException, or a subclass of NSException.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertNoThrowSpecific(expression, exception_class, ...) \
+    _XCTPrimitiveAssertNoThrowSpecific(self, expression, @#expression, exception_class, __VA_ARGS__)
+
+/*!
+ * @define XCTAssertNoThrowSpecificNamed(expression, exception_class, exception_name, ...)
+ * Generates a failure when ((\a expression) throws \a exception_class with \a exception_name).
+ * @param expression An expression.
+ * @param exception_class The class of the exception. Must be NSException, or a subclass of NSException.
+ * @param exception_name The name of the exception.
+ * @param ... An optional supplementary description of the failure. A literal NSString, optionally with string format specifiers. This parameter can be completely omitted.
+*/
+#define XCTAssertNoThrowSpecificNamed(expression, exception_class, exception_name, ...) \
+    _XCTPrimitiveAssertNoThrowSpecificNamed(self, expression, @#expression, exception_class, exception_name, __VA_ARGS__)

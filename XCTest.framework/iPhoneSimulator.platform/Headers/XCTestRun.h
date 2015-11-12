@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013 Apple Inc. All rights reserved.
+// Copyright (c) 2013-2014 Apple Inc. All rights reserved.
 //
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -29,45 +29,141 @@
 // 
 // This notice may not be removed from this file.
 
-#import <XCTest/XCTestCase.h>
+#import <XCTest/XCAbstractTest.h>
 
-/*
- A TestResult collects the results of executing a test. The test framework distinguishes between %failures which are anticipated and checked for problems like a test that failed; and %{unexpected failures} which are unforeseen (catastrophic) problems, like an exception.
+/*!
+ * @class XCTestRun
+ * A test run collects information about the execution of a test. Failures in explicit
+ * test assertions are classified as "expected", while failures from unrelated or
+ * uncaught exceptions are classified as "unexpected".
  */
 @interface XCTestRun : NSObject {
 #ifndef __OBJC2__
 @private
-    NSTimeInterval startDate;
-    NSTimeInterval stopDate;
-    XCTest * test;
+    XCTest * _test;
+    NSTimeInterval _startDate;
+    NSTimeInterval _stopDate;
+    NSUInteger _executionCount;
+    NSUInteger _failureCount;
+    NSUInteger _unexpectedExceptionCount;
 #endif
 }
 
-+ (id) testRunWithTest:(XCTest *) aTest;
-- (id) initWithTest:(XCTest *) aTest;
+/*!
+ * @method +testRunWithTest:
+ * Class factory method for the XCTestRun class.
+ *
+ * @param test An XCTest instance.
+ *
+ * @return A test run for the provided test.
+ */
++ (id)testRunWithTest:(XCTest *)test;
 
-- (XCTest *) test;
+/*!
+ * @method -initWithTest:
+ * Designated initializer for the XCTestRun class.
+ *
+ * @param test An XCTest instance.
+ *
+ * @return A test run for the provided test.
+ */
+- (id)initWithTest:(XCTest *)test;
 
-- (void) start;
-- (void) stop;
+/*!
+ * @property test
+ * The test instance provided when the test run was initialized.
+ */
+@property (readonly, strong) XCTest *test;
 
-- (NSDate *) startDate;
-- (NSDate *) stopDate;
-- (NSTimeInterval) totalDuration; 
-- (NSTimeInterval) testDuration;
+/*!
+ * @method -start
+ * Start a test run. Must not be called more than once.
+ */
+- (void)start;
 
-/// The number of test cases in the run.
-- (NSUInteger) testCaseCount;
+/*!
+ * @method -stop
+ * Stop a test run. Must not be called unless the run has been started. Must not be called more than once.
+ */
+- (void)stop;
 
-/// The number of test failures recorded during the run.
-- (NSUInteger) failureCount;
+/*!
+ * @property startDate
+ * The time at which the test run was started, or nil.
+ */
+@property (readonly, copy) NSDate *startDate;
 
-/// The number of uncaught exceptions recorded during the run.
-- (NSUInteger) unexpectedExceptionCount;
+/*!
+ * @property stopDate
+ * The time at which the test run was stopped, or nil.
+ */
+@property (readonly, copy) NSDate *stopDate;
 
-/// The total number of test failures and uncaught exceptions recorded during the run.
-- (NSUInteger) totalFailureCount;
+/*!
+ * @property totalDuration
+ * The number of seconds that elapsed between when the run was started and when it was stopped.
+ */
+@property (readonly) NSTimeInterval totalDuration;
 
-- (BOOL) hasSucceeded;
+/*!
+ * @property testDuration
+ * The number of seconds that elapsed between when the run was started and when it was stopped.
+ */
+@property (readonly) NSTimeInterval testDuration;
+
+/*!
+ * @property testCaseCount
+ * The number of tests in the run.
+ */
+@property (readonly) NSUInteger testCaseCount;
+
+/*!
+ * @property executionCount
+ * The number of test executions recorded during the run.
+ */
+@property (readonly) NSUInteger executionCount;
+
+/*!
+ * @property failureCount
+ * The number of test failures recorded during the run.
+ */
+@property (readonly) NSUInteger failureCount;
+
+/*!
+ * @property unexpectedExceptionCount
+ * The number of uncaught exceptions recorded during the run.
+ */
+@property (readonly) NSUInteger unexpectedExceptionCount;
+
+/*!
+ * @property totalFailureCount
+ * The total number of test failures and uncaught exceptions recorded during the run.
+ */
+@property (readonly) NSUInteger totalFailureCount;
+
+/*!
+ * @property hasSucceeded
+ * YES if all tests in the run completed their execution without recording any failures, otherwise NO.
+ */
+@property (readonly) BOOL hasSucceeded;
+
+/*!
+ * @method -recordFailureWithDescription:inFile:atLine:expected:
+ * Records a failure in the execution of the test for this test run. Must not be called
+ * unless the run has been started. Must not be called if the test run has been stopped.
+ *
+ * @param description The description of the failure being reported.
+ *
+ * @param filePath The file path to the source file where the failure being reported
+ * was encountered.
+ *
+ * @param lineNumber The line number in the source file at filePath where the
+ * failure being reported was encountered.
+ *
+ * @param expected YES if the failure being reported was the result of a failed assertion,
+ * NO if it was the result of an uncaught exception.
+ *
+ */
+- (void)recordFailureWithDescription:(NSString *)description inFile:(NSString *)filePath atLine:(NSUInteger)lineNumber expected:(BOOL)expected;
 
 @end

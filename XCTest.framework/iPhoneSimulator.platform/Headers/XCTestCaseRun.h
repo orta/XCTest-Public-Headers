@@ -30,16 +30,11 @@
 // This notice may not be removed from this file.
 
 #import <XCTest/XCTestRun.h>
-#import <XCTest/XCTestDefines.h>
 
-@interface XCTestCaseRun : XCTestRun {
-#ifndef __OBJC2__
-@private
-    NSUInteger failureCount;
-    NSUInteger unexpectedExceptionCount;
-#endif
-}
+@class XCTestCase;
 
-- (void) recordFailureInTest:(XCTestCase *)testCase withDescription:(NSString *)description inFile:(NSString *) filePath atLine:(NSUInteger) lineNumber expected:(BOOL)expected;
+@interface XCTestCaseRun : XCTestRun
+
+- (void)recordFailureInTest:(XCTestCase *)testCase withDescription:(NSString *)description inFile:(NSString *)filePath atLine:(NSUInteger)lineNumber expected:(BOOL)expected DEPRECATED_ATTRIBUTE;
 
 @end

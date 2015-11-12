@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013 Apple Inc. All rights reserved.
+// Copyright (c) 2013-2014 Apple Inc. All rights reserved.
 //
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -29,16 +29,60 @@
 // 
 // This notice may not be removed from this file.
 
-#import <XCTest/XCTestRun.h>
+#import <Foundation/Foundation.h>
 
-@interface XCTestSuiteRun : XCTestRun {
-#ifndef __OBJC2__
-@private
-    NSMutableArray *runs;
-#endif
-}
+@class XCTestRun;
 
-- (NSArray *) testRuns;
-- (void) addTestRun:(XCTestRun *) aTestRun;
+/*!
+ * @class XCTest
+ *
+ * An abstract base class for testing. XCTestCase and XCTestSuite extend XCTest to provide
+ * for creating, managing, and executing tests. Most developers will not need to subclass
+ * XCTest directly.
+ */
+@interface XCTest : NSObject
+
+/*!
+ * @property testCaseCount
+ * Number of test cases. Must be overridden by subclasses.
+ */
+@property (readonly) NSUInteger testCaseCount;
+
+/*!
+ * @property name
+ * Test's name. Must be overridden by subclasses.
+ */
+@property (readonly, copy) NSString *name;
+
+/*!
+ * @property testRunClass
+ * The XCTestRun subclass that will be instantiated when the test is run to hold
+ * the test's results. Must be overridden by subclasses.
+ */
+@property (readonly) Class testRunClass;
+
+/*!
+ * @method -performTest:
+ * The method through which tests are executed. Must be overridden by subclasses.
+ */
+- (void)performTest:(XCTestRun *)run;
+
+/*!
+ * @method -run
+ * Creates an instance of the testRunClass and passes it as a parameter to the performTest method.
+ */
+- (XCTestRun *)run;
+
+/*!
+ * @method -setUp
+ * Setup method called before the invocation of each test method in the class.
+ */
+- (void)setUp;
+
+/*!
+ * @method -tearDown
+ * Teardown method called after the invocation of each test method in the class.
+ */
+- (void)tearDown;
 
 @end

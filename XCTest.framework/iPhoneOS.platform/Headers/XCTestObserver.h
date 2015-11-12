@@ -29,33 +29,27 @@
 // 
 // This notice may not be removed from this file.
 
-#import <Foundation/Foundation.h>
-
 #import <XCTest/XCTestDefines.h>
 
 @class XCTestRun;
 
-/*! An XCTestObserver monitors the progress of tests as they're run.
- 
- An instance of each XCTestObserver subclass specified via the XCTestObserverClass user default will be instantiated prior to running tests, and cleaned up after tests are run. However, subclasses should do their primary setup and teardown in -startObserving and -stopObserving rather than -init and -dealloc so it occurs immediately before and after tests are run.
+/*!
+ * XCTestObserver is deprecated.
  */
+DEPRECATED_ATTRIBUTE
 @interface XCTestObserver : NSObject
 
-/*! Sent immediately before running tests to inform the observer that it's time to start observing test progress. Subclasses can override this method, but they must invoke super's implementation. */
-- (void) startObserving;
-
-/*! Sent immediately after running tests to inform the observer that it's time to stop observing test progress. Subclasses can override this method, but they must invoke super's implementation. */
-- (void) stopObserving;
-
-- (void) testSuiteDidStart:(XCTestRun *) testRun;
-- (void) testSuiteDidStop:(XCTestRun *) testRun;
-
-- (void) testCaseDidStart:(XCTestRun *) testRun;
-- (void) testCaseDidStop:(XCTestRun *) testRun;
-
-- (void) testCaseDidFail:(XCTestRun *) testRun withDescription:(NSString *)description inFile:(NSString *) filePath atLine:(NSUInteger) lineNumber;
+- (void)startObserving;
+- (void)stopObserving;
+- (void)testSuiteDidStart:(XCTestRun *)testRun;
+- (void)testSuiteDidStop:(XCTestRun *)testRun;
+- (void)testCaseDidStart:(XCTestRun *)testRun;
+- (void)testCaseDidStop:(XCTestRun *)testRun;
+- (void)testCaseDidFail:(XCTestRun *)testRun withDescription:(NSString *)description inFile:(NSString *)filePath atLine:(NSUInteger)lineNumber;
 
 @end
 
-/*! Setting the XCTestObserverClass user default to the name of a subclass of XCTestObserver indicates that XCTest should use that subclass for reporting test results rather than the default, XCTestLog. You can specify multiple subclasses of XCTestObserver by specifying a comma between each one, for example @"XCTestLog,FooObserver". */
-XCT_EXPORT NSString * const XCTestObserverClassKey;
+/*!
+ * XCTestObserverClassKey is deprecated.
+ */
+XCT_EXPORT NSString * const XCTestObserverClassKey DEPRECATED_ATTRIBUTE;

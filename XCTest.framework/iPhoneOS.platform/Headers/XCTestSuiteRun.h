@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013 Apple Inc. All rights reserved.
+// Copyright (c) 2013-2014 Apple Inc. All rights reserved.
 //
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -34,11 +34,12 @@
 @interface XCTestSuiteRun : XCTestRun {
 #ifndef __OBJC2__
 @private
-    NSMutableArray *runs;
+    NSMutableArray *_testRuns;
 #endif
 }
 
-- (NSArray *) testRuns;
-- (void) addTestRun:(XCTestRun *) aTestRun;
+@property (readonly, copy) NSArray *testRuns;
+
+- (void)addTestRun:(XCTestRun *)testRun;
 
 @end

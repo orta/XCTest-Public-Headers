@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013 Apple Inc. All rights reserved.
+// Copyright (c) 2013-2014 Apple Inc. All rights reserved.
 //
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -33,33 +33,56 @@
 
 @class XCTestRun;
 
-/*
- An abstract Test class. The XCTest, XCTestCase and XCTestSuite classes implement a Composite pattern.
+/*!
+ * @class XCTest
+ *
+ * An abstract base class for testing. XCTestCase and XCTestSuite extend XCTest to provide
+ * for creating, managing, and executing tests. Most developers will not need to subclass
+ * XCTest directly.
  */
 @interface XCTest : NSObject
 
-/*
- Number of test cases
+/*!
+ * @property testCaseCount
+ * Number of test cases. Must be overridden by subclasses.
  */
-- (NSUInteger) testCaseCount;
-- (BOOL) isEmpty;
+@property (readonly) NSUInteger testCaseCount;
 
-/*
- Test's name
+/*!
+ * @property name
+ * Test's name. Must be overridden by subclasses.
  */
-- (NSString *) name;
+@property (readonly, copy) NSString *name;
 
-/*
- Creating test runs
+/*!
+ * @property testRunClass
+ * The XCTestRun subclass that will be instantiated when the test is run to hold
+ * the test's results. Must be overridden by subclasses.
  */
-- (Class) testRunClass;
-- (void) performTest:(XCTestRun *) aRun;
-- (XCTestRun *) run;
+@property (readonly) Class testRunClass;
 
-/// Setup method called before the invocation of each test method in the class.
-- (void) setUp;
+/*!
+ * @method -performTest:
+ * The method through which tests are executed. Must be overridden by subclasses.
+ */
+- (void)performTest:(XCTestRun *)run;
 
-/// Teardown method called after the invocation of each test method in the class.
-- (void) tearDown;
+/*!
+ * @method -run
+ * Creates an instance of the testRunClass and passes it as a parameter to the performTest method.
+ */
+- (XCTestRun *)run;
+
+/*!
+ * @method -setUp
+ * Setup method called before the invocation of each test method in the class.
+ */
+- (void)setUp;
+
+/*!
+ * @method -tearDown
+ * Teardown method called after the invocation of each test method in the class.
+ */
+- (void)tearDown;
 
 @end

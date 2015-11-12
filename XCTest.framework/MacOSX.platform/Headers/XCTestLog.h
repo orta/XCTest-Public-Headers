@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013 Apple Inc. All rights reserved.
+// Copyright (c) 2013-2014 Apple Inc. All rights reserved.
 //
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -29,14 +29,21 @@
 // 
 // This notice may not be removed from this file.
 
-#import <XCTest/XCAbstractTest.h>
-#import <XCTest/XCTestAssertions.h>
-#import <XCTest/XCTestCase.h>
-#import <XCTest/XCTestCaseRun.h>
-#import <XCTest/XCTestDefines.h>
-#import <XCTest/XCTestLog.h>
 #import <XCTest/XCTestObserver.h>
-#import <XCTest/XCTestProbe.h>
-#import <XCTest/XCTestRun.h>
-#import <XCTest/XCTestSuite.h>
-#import <XCTest/XCTestSuiteRun.h>
+
+/*!
+ * XCTestLog is deprecated.
+ */
+
+DEPRECATED_ATTRIBUTE
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+@interface XCTestLog : XCTestObserver
+#pragma clang diagnostic pop
+
+@property (readonly, strong) NSFileHandle *logFileHandle;
+- (void)testLogWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
+- (void)testLogWithFormat:(NSString *)format arguments:(va_list)arguments NS_FORMAT_FUNCTION(1,0);
+
+@end
+
