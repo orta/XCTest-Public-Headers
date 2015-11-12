@@ -1,4 +1,4 @@
-/*$Id: SenTestLog.h,v 1.6 2005/04/02 03:18:21 phink Exp $*/
+/*$Id: NSInvocation_SenTesting.h,v 1.7 2005/04/02 03:18:20 phink Exp $*/
 
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -29,14 +29,8 @@
 // This notice may not be removed from this file.
 
 #import <Foundation/Foundation.h>
-#import <SenTestingKit/SenTestObserver.h>
 
-@interface SenTestLog : SenTestObserver
-{
-}
-
-/*"Logging test results"*/
-+ (void) testLogWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
-+ (void) testLogWithFormat:(NSString *)format arguments:(va_list)arguments NS_FORMAT_FUNCTION(1,0);
-
+@interface NSInvocation (SenTesting)
+- (BOOL) hasTestCaseSignature;
+- (NSComparisonResult)compare:(NSInvocation *)anInvocation;
 @end

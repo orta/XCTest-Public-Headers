@@ -1,4 +1,4 @@
-/*$Id: SenTestLog.h,v 1.6 2005/04/02 03:18:21 phink Exp $*/
+/*$Id: SenTestDefines.h,v 1.6 2005/04/02 03:18:21 phink Exp $*/
 
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -28,15 +28,35 @@
 // 
 // This notice may not be removed from this file.
 
-#import <Foundation/Foundation.h>
-#import <SenTestingKit/SenTestObserver.h>
+#if defined(WIN32)
+    #undef SENTEST_EXPORT
+    #if defined(BUILDINGSENTEST)
+    #define SENTEST_EXPORT __declspec(dllexport) extern
+    #else
+    #define SENTEST_EXPORT __declspec(dllimport) extern
+    #endif
+    #if !defined(SENTEST_IMPORT)
+    #define SENTEST_IMPORT __declspec(dllimport) extern
+    #endif
+#endif
 
-@interface SenTestLog : SenTestObserver
-{
-}
+#if defined(__cplusplus)
+    #define SENTEST_EXPORT extern "C"
+    #define SENTEST_IMPORT extern "C"
+#endif
 
-/*"Logging test results"*/
-+ (void) testLogWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
-+ (void) testLogWithFormat:(NSString *)format arguments:(va_list)arguments NS_FORMAT_FUNCTION(1,0);
+#if !defined(SENTEST_EXPORT)
+    #define SENTEST_EXPORT extern
+#endif
 
-@end
+#if !defined(SENTEST_IMPORT)
+    #define SENTEST_IMPORT extern
+#endif
+
+#if !defined(SENTEST_STATIC_INLINE)
+#define SENTEST_STATIC_INLINE static __inline__
+#endif
+
+#if !defined(SENTEST_EXTERN_INLINE)
+#define SENTEST_EXTERN_INLINE extern __inline__
+#endif

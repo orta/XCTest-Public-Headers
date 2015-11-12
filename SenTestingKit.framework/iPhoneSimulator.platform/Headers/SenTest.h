@@ -1,4 +1,4 @@
-/*$Id: SenTestLog.h,v 1.6 2005/04/02 03:18:21 phink Exp $*/
+/*$Id: SenTest.h,v 1.8 2005/04/02 03:18:20 phink Exp $*/
 
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -28,15 +28,31 @@
 // 
 // This notice may not be removed from this file.
 
-#import <Foundation/Foundation.h>
-#import <SenTestingKit/SenTestObserver.h>
 
-@interface SenTestLog : SenTestObserver
+/*"An abstract Test class. The SenTest, SenTestCase and SenTestSuite classes implement a Composite pattern."*/
+
+
+#import <Foundation/Foundation.h>
+
+@class SenTestRun;
+
+@interface SenTest :NSObject
 {
 }
 
-/*"Logging test results"*/
-+ (void) testLogWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
-+ (void) testLogWithFormat:(NSString *)format arguments:(va_list)arguments NS_FORMAT_FUNCTION(1,0);
+/*" Number of test cases"*/
+- (unsigned int) testCaseCount;
+- (BOOL) isEmpty;
 
+/*"Test's name"*/
+- (NSString *) name;
+
+/*"Creating test runs"*/
+- (Class) testRunClass;
+- (void) performTest:(SenTestRun *) aRun;
+- (SenTestRun *) run;
+
+/*"Pre- and post-test methods"*/
+- (void) setUp;
+- (void) tearDown;
 @end
