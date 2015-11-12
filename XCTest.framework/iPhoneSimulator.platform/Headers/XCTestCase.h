@@ -37,10 +37,6 @@ NS_ASSUME_NONNULL_BEGIN
 @class XCTestSuite;
 @class XCTestCaseRun;
 
-#if XCT_UI_TESTING_AVAILABLE
-@class XCUIElement;
-#endif
-
 /*!
  * @class XCTestCase
  * XCTestCase is a concrete subclass of XCTest that should be the override point for
@@ -66,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
     - (void)testSomething;
 
  * Test methods are automatically recognized as test cases by the XCTest framework.
- * Each XCTestCase subclass's defaultTestSuite is a XCTestSuite which includes these
+ * Each XCTestCase subclass's defaultTestSuite is a XCTestSuite which includes theses
  * tests. Test method implementations usually contain assertions that must be verified
  * for the test to pass, for example:
  
@@ -275,20 +271,6 @@ XCT_EXPORT NSString * const XCTPerformanceMetric_WallClockTime;
  * Measurement of metrics will stop at this point.
  */
 - (void)stopMeasuring;
-
-#pragma mark - UI Testing Support
-#if XCT_UI_TESTING_AVAILABLE
-
-/*! Adds a handler to the current context. Returns a token that can be used to unregister the handler. Handlers are invoked in the reverse order in which they are added until one of the handlers returns true, indicating that it has handled the alert.
- @param handlerDescription Explanation of the behavior and purpose of this handler, mainly used for debugging and analysis.
- @param handler Handler block for asynchronous UI such as alerts and other dialogs. Handlers should return true if they handled the UI, false if they did not. The handler is passed an XCUIElement representing the top level UI element for the alert.
- */
-- (id <NSObject>)addUIInterruptionMonitorWithDescription:(NSString *)handlerDescription handler:(BOOL (^)(XCUIElement *interruptingElement))handler;
-
-/*! Removes a handler using the token provided when it was added. */
-- (void)removeUIInterruptionMonitor:(id <NSObject>)monitor;
-
-#endif
 
 @end
 

@@ -51,10 +51,8 @@ NS_CLASS_AVAILABLE(10_11, 9_0)
 /*! Returns a query for direct children of the element matching the specified type. */
 - (XCUIElementQuery *)childrenMatchingType:(XCUIElementType)type;
 
-#if !TARGET_OS_TV
 /*! Creates and returns a new coordinate that will compute its screen point by adding the offset multiplied by the size of the element’s frame to the origin of the element’s frame. */
 - (XCUICoordinate *)coordinateWithNormalizedOffset:(CGVector)normalizedOffset;
-#endif
 
 /*!
  @discussion
@@ -87,8 +85,7 @@ NS_CLASS_AVAILABLE(10_11, 9_0)
  */
 - (void)typeText:(NSString *)text;
 
-#if TARGET_OS_TV
-#elif TARGET_OS_IOS
+#if TARGET_OS_IPHONE
 
 /*!
  * Sends a tap event to a hittable point computed for the element.
@@ -181,7 +178,7 @@ NS_CLASS_AVAILABLE(10_11, 9_0)
  */
 - (void)rotate:(CGFloat)rotation withVelocity:(CGFloat)velocity;
 
-#elif TARGET_OS_MAC
+#else
 
 /*!
  * Moves the cursor over the element.
@@ -232,29 +229,6 @@ NS_CLASS_AVAILABLE(10_11, 9_0)
 #endif
 
 @end
-
-/*! This category on XCUIElement provides functionality for automating UISlider and NSSlider. */
-@interface XCUIElement (XCUIElementTypeSlider)
-
-/*! Manipulates the UI to change the displayed value of the slider to one based on a normalized position. 0 corresponds to the minimum value of the slider, 1 corresponds to its maximum value. The adjustment is a "best effort" to move the indicator to the desired position; absolute fidelity is not guaranteed. */
-- (void)adjustToNormalizedSliderPosition:(CGFloat)normalizedSliderPosition;
-
-/*! Returns the position of the slider's indicator as a normalized value where 0 corresponds to the minimum value of the slider and 1 corresponds to its maximum value. */
-@property (readonly) CGFloat normalizedSliderPosition;
-
-@end
-
-#if TARGET_OS_IOS
-
-/*! This category on XCUIElement provides functionality for automating the picker wheels of UIPickerViews and UIDatePickers. */
-@interface XCUIElement (XCUIElementTypePickerWheel)
-
-/*! Changes the displayed value for the picker wheel. Will generate a test failure if the specified value is not available. */
-- (void)adjustToPickerWheelValue:(NSString *)pickerWheelValue;
-
-@end
-
-#endif
 
 #endif
 

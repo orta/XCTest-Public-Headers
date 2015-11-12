@@ -48,7 +48,7 @@
 #define XCT_NULLABLE_AVAILABLE 1
 #endif
 
-#if (!defined(__OBJC_GC__) || (defined(__OBJC_GC__) && ! __OBJC_GC__)) && defined(__OBJC2__) && __OBJC2__ && (!TARGET_OS_WATCH)
+#if (!defined(__OBJC_GC__) || (defined(__OBJC_GC__) && ! __OBJC_GC__)) && defined(__OBJC2__) && __OBJC2__
 #define XCT_UI_TESTING_AVAILABLE 1
 #endif
 
@@ -66,8 +66,3 @@
 #define XCT_UI_TESTING_AVAILABLE 0
 #endif
 
-#if TARGET_OS_SIMULATOR
-#define XCTEST_SIMULATOR_UNAVAILABLE(_msg) __attribute__((availability(ios,unavailable,message=_msg)))
-#else
-#define XCTEST_SIMULATOR_UNAVAILABLE(_msg)
-#endif

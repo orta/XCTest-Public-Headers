@@ -65,11 +65,6 @@ NS_ASSUME_NONNULL_BEGIN
 /*! Whether or not the element is selected. */
 @property (readonly, getter = isSelected) BOOL selected;
 
-#if TARGET_OS_TV
-/*! Whether or not the elment has UI focus. */
-@property (readonly) BOOL hasFocus;
-#endif
-
 @end
 
 NS_ASSUME_NONNULL_END
