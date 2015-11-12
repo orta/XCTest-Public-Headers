@@ -1,4 +1,4 @@
-/*$Id: SenTestLog.h,v 1.6 2005/04/02 03:18:21 phink Exp $*/
+/*$Id: SenTestingUtilities.h,v 1.7 2005/04/02 03:18:22 phink Exp $*/
 
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -29,14 +29,76 @@
 // This notice may not be removed from this file.
 
 #import <Foundation/Foundation.h>
-#import <SenTestingKit/SenTestObserver.h>
 
-@interface SenTestLog : SenTestObserver
-{
-}
 
-/*"Logging test results"*/
-+ (void) testLogWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
-+ (void) testLogWithFormat:(NSString *)format arguments:(va_list)arguments NS_FORMAT_FUNCTION(1,0);
+// Defining ASSIGN and RETAIN.
+// ___newVal is to avoid multiple evaluations of val.
+// RETAIN is deprecated and should not used.
 
+#if defined (GNUSTEP)
+// GNUstep has its own definitions of ASSIGN and RETAIN
+#else
+#define RETAIN(var,val) \
+({ \
+	id ___newVal = (val); \
+	id ___oldVar = (var); \
+	if (___oldVar != ___newVal) { \
+		if (___newVal != nil) { \
+			[___newVal retain]; \
+		} \
+		var = ___newVal; \
+		if (___oldVar != nil) { \
+			[___oldVar release]; \
+		} \
+	} \
+})
+
+#if defined(GARBAGE_COLLECTION)
+#define ASSIGN(var,val) \
+({ \
+	var = val; \
+})
+#else
+#define ASSIGN RETAIN
+#endif
+#endif
+
+
+// Defining RELEASE.
+//
+// The RELEASE macro can be used in any place where a release 
+// message would be sent. VAR is released and set to nil
+#if defined (GNUSTEP)
+// GNUstep has its own macro.
+#else
+#if defined(GARBAGE_COLLECTION)
+#define RELEASE(var)
+#else
+#define RELEASE(var) \
+({ \
+	id	___oldVar = (id)(var); \
+	if (___oldVar != nil) { \
+		var = nil; \
+		[___oldVar release]; \
+	} \
+})
+#endif
+#endif
+
+@class NSString;
+
+#ifdef __cplusplus
+extern "C" NSString *STComposeString(NSString *, ...);
+extern "C" NSString *getScalarDescription(NSValue *left);
+#else
+extern NSString *STComposeString(NSString *, ...);
+extern NSString *getScalarDescription(NSValue *left);
+#endif
+
+@interface NSFileManager (SenTestingAdditions)
+- (BOOL) fileExistsAtPathOrLink:(NSString *)aPath;
+@end
+
+@interface NSValue (SenTestingAdditions)
+- (NSString *) contentDescription;
 @end
