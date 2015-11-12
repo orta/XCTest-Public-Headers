@@ -66,3 +66,8 @@
 #define XCT_UI_TESTING_AVAILABLE 0
 #endif
 
+#if TARGET_OS_SIMULATOR
+#define XCTEST_SIMULATOR_UNAVAILABLE(_msg) __attribute__((availability(ios,unavailable,message=_msg)))
+#else
+#define XCTEST_SIMULATOR_UNAVAILABLE(_msg)
+#endif
