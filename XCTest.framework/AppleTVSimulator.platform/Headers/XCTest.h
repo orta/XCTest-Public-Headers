@@ -29,45 +29,30 @@
 // 
 // This notice may not be removed from this file.
 
-#import <Foundation/Foundation.h>
+#import <XCTest/XCTestDefines.h>
+#import <XCTest/XCTestErrors.h>
 
-#if defined(__cplusplus)
-    #define XCT_EXPORT extern "C"
-#else
-    #define XCT_EXPORT extern
-#endif
+#import <XCTest/XCAbstractTest.h>
+#import <XCTest/XCTestAssertions.h>
+#import <XCTest/XCTestAssertionsImpl.h>
+#import <XCTest/XCTestCase.h>
+#import <XCTest/XCTestCase+AsynchronousTesting.h>
+#import <XCTest/XCTestCaseRun.h>
+#import <XCTest/XCTestLog.h>
+#import <XCTest/XCTestObserver.h>
+#import <XCTest/XCTestObservationCenter.h>
+#import <XCTest/XCTestObservation.h>
+#import <XCTest/XCTestProbe.h>
+#import <XCTest/XCTestRun.h>
+#import <XCTest/XCTestSuite.h>
+#import <XCTest/XCTestSuiteRun.h>
 
-// For OS X, UI Testing and some Objective-C features are only supported when building against the OS X 10.11 SDK.
-#if TARGET_OS_MAC && (TARGET_OS_IPHONE || (!TARGET_OS_IPHONE && (MAC_OS_X_VERSION_MAX_ALLOWED >= 101100)))
-
-#if __has_feature(objc_generics)
-#define XCT_GENERICS_AVAILABLE 1
-#endif
-
-#if __has_feature(nullability)
-#define XCT_NULLABLE_AVAILABLE 1
-#endif
-
-#if (!defined(__OBJC_GC__) || (defined(__OBJC_GC__) && ! __OBJC_GC__)) && defined(__OBJC2__) && __OBJC2__ && (!TARGET_OS_WATCH)
-#define XCT_UI_TESTING_AVAILABLE 1
-#endif
-
-#endif
-
-#ifndef XCT_NULLABLE_AVAILABLE
-#define XCT_NULLABLE_AVAILABLE 0
-#endif
-
-#ifndef XCT_GENERICS_AVAILABLE
-#define XCT_GENERICS_AVAILABLE 0
-#endif
-
-#ifndef XCT_UI_TESTING_AVAILABLE
-#define XCT_UI_TESTING_AVAILABLE 0
-#endif
-
-#if TARGET_OS_SIMULATOR
-#define XCTEST_SIMULATOR_UNAVAILABLE(_msg) __attribute__((availability(ios,unavailable,message=_msg)))
-#else
-#define XCTEST_SIMULATOR_UNAVAILABLE(_msg)
-#endif
+#import <XCTest/XCUIApplication.h>
+#import <XCTest/XCUIDevice.h>
+#import <XCTest/XCUICoordinate.h>
+#import <XCTest/XCUIElement.h>
+#import <XCTest/XCUIElementQuery.h>
+#import <XCTest/XCUIElementTypes.h>
+#import <XCTest/XCUIElementAttributes.h>
+#import <XCTest/XCUIElementTypeQueryProvider.h>
+#import <XCTest/XCUIKeyboardKeys.h>

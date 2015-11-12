@@ -48,7 +48,7 @@
 #define XCT_NULLABLE_AVAILABLE 1
 #endif
 
-#if (!defined(__OBJC_GC__) || (defined(__OBJC_GC__) && ! __OBJC_GC__)) && defined(__OBJC2__) && __OBJC2__
+#if (!defined(__OBJC_GC__) || (defined(__OBJC_GC__) && ! __OBJC_GC__)) && defined(__OBJC2__) && __OBJC2__ && (!TARGET_OS_WATCH)
 #define XCT_UI_TESTING_AVAILABLE 1
 #endif
 

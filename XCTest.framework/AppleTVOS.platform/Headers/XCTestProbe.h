@@ -31,43 +31,20 @@
 
 #import <Foundation/Foundation.h>
 
-#if defined(__cplusplus)
-    #define XCT_EXPORT extern "C"
-#else
-    #define XCT_EXPORT extern
-#endif
+#import <XCTest/XCTestDefines.h>
 
-// For OS X, UI Testing and some Objective-C features are only supported when building against the OS X 10.11 SDK.
-#if TARGET_OS_MAC && (TARGET_OS_IPHONE || (!TARGET_OS_IPHONE && (MAC_OS_X_VERSION_MAX_ALLOWED >= 101100)))
+XCT_EXPORT int XCTSelfTestMain(void) DEPRECATED_ATTRIBUTE;
 
-#if __has_feature(objc_generics)
-#define XCT_GENERICS_AVAILABLE 1
-#endif
+DEPRECATED_ATTRIBUTE
+@interface XCTestProbe : NSObject
 
-#if __has_feature(nullability)
-#define XCT_NULLABLE_AVAILABLE 1
-#endif
++ (BOOL)isTesting;
 
-#if (!defined(__OBJC_GC__) || (defined(__OBJC_GC__) && ! __OBJC_GC__)) && defined(__OBJC2__) && __OBJC2__ && (!TARGET_OS_WATCH)
-#define XCT_UI_TESTING_AVAILABLE 1
-#endif
+@end
 
-#endif
-
-#ifndef XCT_NULLABLE_AVAILABLE
-#define XCT_NULLABLE_AVAILABLE 0
-#endif
-
-#ifndef XCT_GENERICS_AVAILABLE
-#define XCT_GENERICS_AVAILABLE 0
-#endif
-
-#ifndef XCT_UI_TESTING_AVAILABLE
-#define XCT_UI_TESTING_AVAILABLE 0
-#endif
-
-#if TARGET_OS_SIMULATOR
-#define XCTEST_SIMULATOR_UNAVAILABLE(_msg) __attribute__((availability(ios,unavailable,message=_msg)))
-#else
-#define XCTEST_SIMULATOR_UNAVAILABLE(_msg)
-#endif
+XCT_EXPORT NSString * const XCTestedUnitPath DEPRECATED_ATTRIBUTE;
+XCT_EXPORT NSString * const XCTestScopeKey DEPRECATED_ATTRIBUTE;
+XCT_EXPORT NSString * const XCTestScopeAll DEPRECATED_ATTRIBUTE;
+XCT_EXPORT NSString * const XCTestScopeNone DEPRECATED_ATTRIBUTE;
+XCT_EXPORT NSString * const XCTestScopeSelf DEPRECATED_ATTRIBUTE;
+XCT_EXPORT NSString * const XCTestToolKey DEPRECATED_ATTRIBUTE;

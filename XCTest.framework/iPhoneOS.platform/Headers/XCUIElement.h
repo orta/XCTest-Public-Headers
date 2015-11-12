@@ -28,8 +28,6 @@ typedef NS_OPTIONS(NSUInteger, XCUIKeyModifierFlags) {
     XCUIKeyModifierCommand    = (1UL << 4),
 };
 
-//...
-
 @class XCUIElementQuery;
 @class XCUICoordinate;
 
