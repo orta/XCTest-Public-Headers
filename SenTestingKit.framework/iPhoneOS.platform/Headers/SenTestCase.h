@@ -156,6 +156,17 @@ Test methods implementations usually contains assertions that must be verified f
 
 /*"Returning the class' test methods"*/
 + (NSArray *) testInvocations;
+
+/*"Pre- and post-test methods. This method is different from \"-setUp\" and \"-tearDown\" in that it allows test base classes to perform work for all test method invocations."*/
+- (void) setUpTestWithSelector:(SEL)testMethod;
+- (void) tearDownTestWithSelector:(SEL)testMethod;
+
+/*"Pre- and post-test iteration methods. This method allows test base classes to perform work for all test method invocation iterations."*/
+- (void) beforeTestIteration:(NSUInteger)iteration selector:(SEL)testMethod;
+- (void) afterTestIteration:(NSUInteger)iteration selector:(SEL)testMethod;
+
+/*"Override this method in subclasses to control the number of times any individual test method is invoked (Intendeded use case: Allowing performance tests to be run several times in order to allow gathering of statistically significant metrics)"*/
+- (NSUInteger) numberOfTestIterationsForTestWithSelector:(SEL)testMethod;
 @end
 
 
