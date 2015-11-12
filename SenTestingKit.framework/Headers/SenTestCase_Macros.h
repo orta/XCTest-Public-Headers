@@ -288,7 +288,7 @@ do { \
 "*/
 #define STAssertTrue(expr, description, ...) \
 do { \
-        BOOL _evaluatedExpression = (expr);\
+        BOOL _evaluatedExpression = !!(expr);\
             if (!_evaluatedExpression) {\
                 NSString *_expression = [NSString stringWithUTF8String:#expr];\
                     [self failWithException:([NSException failureInCondition:_expression \
@@ -310,7 +310,7 @@ do { \
 #define STAssertTrueNoThrow(expr, description, ...) \
 do { \
     @try {\
-        BOOL _evaluatedExpression = (expr);\
+        BOOL _evaluatedExpression = !!(expr);\
             if (!_evaluatedExpression) {\
                 NSString *_expression = [NSString stringWithUTF8String:#expr];\
                     [self failWithException:([NSException failureInCondition:_expression \
@@ -338,7 +338,7 @@ do { \
 "*/
 #define STAssertFalse(expr, description, ...) \
 do { \
-        BOOL _evaluatedExpression = (expr);\
+        BOOL _evaluatedExpression = !!(expr);\
             if (_evaluatedExpression) {\
                 NSString *_expression = [NSString stringWithUTF8String:#expr];\
                     [self failWithException:([NSException failureInCondition:_expression \
@@ -360,7 +360,7 @@ do { \
 #define STAssertFalseNoThrow(expr, description, ...) \
 do { \
     @try {\
-        BOOL _evaluatedExpression = (expr);\
+        BOOL _evaluatedExpression = !!(expr);\
             if (_evaluatedExpression) {\
                 NSString *_expression = [NSString stringWithUTF8String:#expr];\
                     [self failWithException:([NSException failureInCondition:_expression \
