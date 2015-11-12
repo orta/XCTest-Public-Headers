@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013-2014 Apple Inc. All rights reserved.
+// Copyright (c) 2013-2015 Apple Inc. All rights reserved.
 //
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -31,6 +31,8 @@
 
 #import <XCTest/XCAbstractTest.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /*!
  * @class XCTestRun
  * A test run collects information about the execution of a test. Failures in explicit
@@ -40,12 +42,7 @@
 @interface XCTestRun : NSObject {
 #ifndef __OBJC2__
 @private
-    XCTest * _test;
-    NSTimeInterval _startDate;
-    NSTimeInterval _stopDate;
-    NSUInteger _executionCount;
-    NSUInteger _failureCount;
-    NSUInteger _unexpectedExceptionCount;
+    id _internalTestRun;
 #endif
 }
 
@@ -57,7 +54,7 @@
  *
  * @return A test run for the provided test.
  */
-+ (id)testRunWithTest:(XCTest *)test;
++ (instancetype)testRunWithTest:(XCTest *)test;
 
 /*!
  * @method -initWithTest:
@@ -67,7 +64,7 @@
  *
  * @return A test run for the provided test.
  */
-- (id)initWithTest:(XCTest *)test;
+- (instancetype)initWithTest:(XCTest *)test NS_DESIGNATED_INITIALIZER;
 
 /*!
  * @property test
@@ -91,13 +88,21 @@
  * @property startDate
  * The time at which the test run was started, or nil.
  */
+#if XCT_NULLABLE_AVAILABLE
+@property (readonly, copy, nullable) NSDate *startDate;
+#else
 @property (readonly, copy) NSDate *startDate;
+#endif
 
 /*!
  * @property stopDate
  * The time at which the test run was stopped, or nil.
  */
+#if XCT_NULLABLE_AVAILABLE
+@property (readonly, copy, nullable) NSDate *stopDate;
+#else
 @property (readonly, copy) NSDate *stopDate;
+#endif
 
 /*!
  * @property totalDuration
@@ -155,7 +160,7 @@
  * @param description The description of the failure being reported.
  *
  * @param filePath The file path to the source file where the failure being reported
- * was encountered.
+ * was encountered or nil if unknown.
  *
  * @param lineNumber The line number in the source file at filePath where the
  * failure being reported was encountered.
@@ -164,6 +169,12 @@
  * NO if it was the result of an uncaught exception.
  *
  */
+#if XCT_NULLABLE_AVAILABLE
+- (void)recordFailureWithDescription:(NSString *)description inFile:(nullable NSString *)filePath atLine:(NSUInteger)lineNumber expected:(BOOL)expected;
+#else
 - (void)recordFailureWithDescription:(NSString *)description inFile:(NSString *)filePath atLine:(NSUInteger)lineNumber expected:(BOOL)expected;
+#endif
 
 @end
+
+NS_ASSUME_NONNULL_END

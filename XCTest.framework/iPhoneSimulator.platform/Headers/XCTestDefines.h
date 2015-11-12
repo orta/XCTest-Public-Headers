@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013 Apple Inc. All rights reserved.
+// Copyright (c) 2013-2015 Apple Inc. All rights reserved.
 //
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -29,8 +29,45 @@
 // 
 // This notice may not be removed from this file.
 
+#import <Foundation/Foundation.h>
+
 #if defined(__cplusplus)
     #define XCT_EXPORT extern "C"
 #else
     #define XCT_EXPORT extern
+#endif
+
+// For OS X, UI Testing and some Objective-C features are only supported when building against the OS X 10.11 SDK.
+#if TARGET_OS_MAC && (TARGET_OS_IPHONE || (!TARGET_OS_IPHONE && (MAC_OS_X_VERSION_MAX_ALLOWED >= 101100)))
+
+#if __has_feature(objc_generics)
+#define XCT_GENERICS_AVAILABLE 1
+#endif
+
+#if __has_feature(nullability)
+#define XCT_NULLABLE_AVAILABLE 1
+#endif
+
+#if (!defined(__OBJC_GC__) || (defined(__OBJC_GC__) && ! __OBJC_GC__)) && defined(__OBJC2__) && __OBJC2__
+#define XCT_UI_TESTING_AVAILABLE 1
+#endif
+
+#endif
+
+#ifndef XCT_NULLABLE_AVAILABLE
+#define XCT_NULLABLE_AVAILABLE 0
+#endif
+
+#ifndef XCT_GENERICS_AVAILABLE
+#define XCT_GENERICS_AVAILABLE 0
+#endif
+
+#ifndef XCT_UI_TESTING_AVAILABLE
+#define XCT_UI_TESTING_AVAILABLE 0
+#endif
+
+#if TARGET_OS_SIMULATOR
+#define XCTEST_SIMULATOR_UNAVAILABLE(_msg) __attribute__((availability(ios,unavailable,message=_msg)))
+#else
+#define XCTEST_SIMULATOR_UNAVAILABLE(_msg)
 #endif

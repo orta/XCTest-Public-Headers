@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013-2014 Apple Inc. All rights reserved.
+// Copyright (c) 2013-2015 Apple Inc. All rights reserved.
 //
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -31,15 +31,27 @@
 
 #import <XCTest/XCTestRun.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface XCTestSuiteRun : XCTestRun {
 #ifndef __OBJC2__
 @private
+#if XCT_GENERICS_AVAILABLE
+    NSMutableArray <XCTestRun *> *_testRuns;
+#else
     NSMutableArray *_testRuns;
+#endif
 #endif
 }
 
+#if XCT_GENERICS_AVAILABLE
+@property (readonly, copy) NSArray <XCTestRun *> *testRuns;
+#else
 @property (readonly, copy) NSArray *testRuns;
+#endif
 
 - (void)addTestRun:(XCTestRun *)testRun;
 
 @end
+
+NS_ASSUME_NONNULL_END

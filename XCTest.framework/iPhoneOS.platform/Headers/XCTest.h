@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013-2014 Apple Inc. All rights reserved.
+// Copyright (c) 2013-2015 Apple Inc. All rights reserved.
 //
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -29,17 +29,30 @@
 // 
 // This notice may not be removed from this file.
 
+#import <XCTest/XCTestDefines.h>
+#import <XCTest/XCTestErrors.h>
+
 #import <XCTest/XCAbstractTest.h>
 #import <XCTest/XCTestAssertions.h>
 #import <XCTest/XCTestAssertionsImpl.h>
 #import <XCTest/XCTestCase.h>
 #import <XCTest/XCTestCase+AsynchronousTesting.h>
 #import <XCTest/XCTestCaseRun.h>
-#import <XCTest/XCTestDefines.h>
-#import <XCTest/XCTestErrors.h>
 #import <XCTest/XCTestLog.h>
 #import <XCTest/XCTestObserver.h>
+#import <XCTest/XCTestObservationCenter.h>
+#import <XCTest/XCTestObservation.h>
 #import <XCTest/XCTestProbe.h>
 #import <XCTest/XCTestRun.h>
 #import <XCTest/XCTestSuite.h>
 #import <XCTest/XCTestSuiteRun.h>
+
+#import <XCTest/XCUIApplication.h>
+#import <XCTest/XCUIDevice.h>
+#import <XCTest/XCUICoordinate.h>
+#import <XCTest/XCUIElement.h>
+#import <XCTest/XCUIElementQuery.h>
+#import <XCTest/XCUIElementTypes.h>
+#import <XCTest/XCUIElementAttributes.h>
+#import <XCTest/XCUIElementTypeQueryProvider.h>
+#import <XCTest/XCUIKeyboardKeys.h>
