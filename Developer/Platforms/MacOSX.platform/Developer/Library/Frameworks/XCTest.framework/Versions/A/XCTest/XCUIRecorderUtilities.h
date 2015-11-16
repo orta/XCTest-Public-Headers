@@ -18,6 +18,7 @@
 }
 
 + (id)applicationNodeForLanguage:(unsigned long long)arg1;
++ (unsigned long long)currentPlatform;
 @property(retain) NSMutableString *previousTyping; // @synthesize previousTyping=_previousTyping;
 @property(retain) XCAccessibilityElement *previousFocusedAccessibilityElement; // @synthesize previousFocusedAccessibilityElement=_previousFocusedAccessibilityElement;
 @property unsigned long long _compareSnapshotsLikePlatform; // @synthesize _compareSnapshotsLikePlatform;
@@ -25,13 +26,15 @@
 - (id)performWithKeyModifiersAndBlockNodeForModifierFlags:(unsigned long long)arg1;
 - (id)gestureNodesForKeyDownEventWithCharacters:(id)arg1 charactersIgnoringModifiers:(id)arg2 modifierFlags:(unsigned long long)arg3 focusedAccessibilityElement:(id)arg4 didAppendToPreviousString:(char *)arg5;
 - (id)_stringConstantForString:(id)arg1;
-- (id)_hexStringForSpecialCharacterString:(id)arg1 characterDescription:(id *)arg2 isDeleteCharacter:(char *)arg3;
 - (void)clearPreviousTyping;
 - (id)nodeToFindElementForSnapshots:(id)arg1;
 - (id)typeKeyNodeForKey:(id)arg1 modifierFlags:(unsigned long long)arg2;
 - (id)typeStringNodeForString:(id)arg1;
 - (id)stringForKeyModifierFlags:(unsigned long long)arg1;
 - (id)simpleGestureNodeForMethodName:(id)arg1;
+- (id)assertHasFocusNode;
+- (id)remoteNodeWithButtonSymbolName:(id)arg1;
+- (id)commentNodeWithString:(id)arg1;
 - (id)applicationNode;
 - (id)focusedAccessibilityElementForApplicationSnapshot:(id)arg1;
 - (id)snapshotsForAccessibilityElement:(id)arg1 applicationSnapshot:(id)arg2;

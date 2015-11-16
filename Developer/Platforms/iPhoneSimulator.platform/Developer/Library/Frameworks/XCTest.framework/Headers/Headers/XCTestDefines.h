@@ -37,9 +37,6 @@
     #define XCT_EXPORT extern
 #endif
 
-// For OS X, UI Testing and some Objective-C features are only supported when building against the OS X 10.11 SDK.
-#if TARGET_OS_MAC && (TARGET_OS_IPHONE || (!TARGET_OS_IPHONE && (MAC_OS_X_VERSION_MAX_ALLOWED >= 101100)))
-
 #if __has_feature(objc_generics)
 #define XCT_GENERICS_AVAILABLE 1
 #endif
@@ -48,10 +45,10 @@
 #define XCT_NULLABLE_AVAILABLE 1
 #endif
 
-#if (!defined(__OBJC_GC__) || (defined(__OBJC_GC__) && ! __OBJC_GC__)) && defined(__OBJC2__) && __OBJC2__
+#if (!defined(__OBJC_GC__) || (defined(__OBJC_GC__) && ! __OBJC_GC__)) && (defined(__OBJC2__) && __OBJC2__) && (!defined (TARGET_OS_WATCH) || (defined(TARGET_OS_WATCH) && ! TARGET_OS_WATCH))
+#ifndef XCT_UI_TESTING_AVAILABLE
 #define XCT_UI_TESTING_AVAILABLE 1
 #endif
-
 #endif
 
 #ifndef XCT_NULLABLE_AVAILABLE

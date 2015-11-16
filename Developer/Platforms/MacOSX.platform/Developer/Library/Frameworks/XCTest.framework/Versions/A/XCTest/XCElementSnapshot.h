@@ -20,6 +20,7 @@
     BOOL _selected;
     BOOL _isMainWindow;
     BOOL _hasKeyboardFocus;
+    BOOL _hasFocus;
     XCUIApplication *_application;
     unsigned long long _generation;
     NSString *_title;
@@ -38,6 +39,7 @@
 }
 
 + (BOOL)supportsSecureCoding;
+@property BOOL hasFocus; // @synthesize hasFocus=_hasFocus;
 @property BOOL hasKeyboardFocus; // @synthesize hasKeyboardFocus=_hasKeyboardFocus;
 @property(copy) NSDictionary *additionalAttributes; // @synthesize additionalAttributes=_additionalAttributes;
 @property(copy) NSArray *userTestingAttributes; // @synthesize userTestingAttributes=_userTestingAttributes;
@@ -58,6 +60,8 @@
 @property(copy) id value; // @synthesize value=_value;
 @property struct CGRect frame; // @synthesize frame=_frame;
 @property(copy) NSString *identifier; // @synthesize identifier=_identifier;
+- (id)_uniquelyIdentifyingObjectiveCCode;
+- (id)_uniquelyIdentifyingSwiftCode;
 - (BOOL)_isAncestorOfElement:(id)arg1;
 - (BOOL)_isDescendantOfElement:(id)arg1;
 @property(readonly) NSArray *suggestedHitpoints;
@@ -70,6 +74,7 @@
 - (id)_allDescendants;
 - (BOOL)hasDescendantMatchingFilter:(CDUnknownBlockType)arg1;
 - (id)descendantsByFilteringWithBlock:(CDUnknownBlockType)arg1;
+- (id)elementSnapshotMatchingAccessibilityElement:(id)arg1;
 - (void)enumerateDescendantsUsingBlock:(CDUnknownBlockType)arg1;
 @property(readonly, copy) NSString *truncatedValueString;
 @property(readonly, copy) NSString *compactDescription;

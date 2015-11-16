@@ -8,7 +8,7 @@
 
 #import "XCTestManager_IDEInterface.h"
 
-@class DTXConnection, NSObject<OS_dispatch_queue>, XCSourceCodeTreeNode, XCUIRecorderUtilities;
+@class DTXConnection, NSArray, NSObject<OS_dispatch_queue>, XCSourceCodeTreeNode, XCUIRecorderUtilities;
 
 @interface XCUIRecorder_iOS : XCUIRecorder <XCTestManager_IDEInterface>
 {
@@ -24,6 +24,7 @@
 @property long long testProtocolVersion; // @synthesize testProtocolVersion=_testProtocolVersion;
 @property unsigned long long deferredSoftKeyboardTapGeneration; // @synthesize deferredSoftKeyboardTapGeneration=_deferredSoftKeyboardTapGeneration;
 @property(retain) XCSourceCodeTreeNode *deferredSoftKeyboardTapNode; // @synthesize deferredSoftKeyboardTapNode=_deferredSoftKeyboardTapNode;
+@property(retain) NSObject<OS_dispatch_queue> *processingQueue; // @synthesize processingQueue=_processingQueue;
 @property(retain) DTXConnection *connection; // @synthesize connection=_connection;
 @property(retain) XCUIRecorderUtilities *utilities; // @synthesize utilities=_utilities;
 @property(retain) id <XCTestManager_DaemonConnectionInterface> daemonProxy; // @synthesize daemonProxy=_daemonProxy;
@@ -32,6 +33,7 @@
 - (id)_XCT_getProgressForLaunch:(id)arg1;
 - (id)_XCT_recordedEvent:(id)arg1 targetElementID:(id)arg2 applicationSnapshot:(id)arg3;
 - (id)_XCT_recordedEvent:(id)arg1 forElement:(id)arg2;
+- (id)_XCT_logDebugMessage:(id)arg1;
 - (id)_XCT_logMessage:(id)arg1;
 - (id)_XCT_testMethod:(id)arg1 ofClass:(id)arg2 didMeasureMetric:(id)arg3 file:(id)arg4 line:(id)arg5;
 - (id)_XCT_testCase:(id)arg1 method:(id)arg2 didStallOnMainThreadInFile:(id)arg3 line:(id)arg4;
@@ -48,10 +50,12 @@
 - (id)elementSnapshotParameters;
 - (id)applicationSnapshotParameters;
 - (void)postGestureNode:(id)arg1 isSoftKeyTap:(BOOL)arg2;
-- (void)postNode:(id)arg1 replaceLastNode:(BOOL)arg2;
+- (void)postNodes:(id)arg1 replaceLastNode:(BOOL)arg2;
+- (id)_XCT_nativeFocusItemDidChangeAtTime:(id)arg1 parameterSnapshot:(id)arg2 applicationSnapshot:(id)arg3;
 - (id)_XCT_exchangeCurrentProtocolVersion:(id)arg1 minimumVersion:(id)arg2;
 - (id)_XCT_recordedFirstResponderChangedWithApplicationSnapshot:(id)arg1;
 - (id)_XCT_recordedOrientationChange:(id)arg1;
+- (id)_XCT_recordedEventNames:(id)arg1 timestamp:(id)arg2 duration:(id)arg3 startLocation:(id)arg4 startElementSnapshot:(id)arg5 startApplicationSnapshot:(id)arg6 endLocation:(id)arg7 endElementSnapshot:(id)arg8 endApplicationSnapshot:(id)arg9;
 - (id)_XCT_recordedEventNames:(id)arg1 duration:(id)arg2 startLocation:(id)arg3 startElementSnapshot:(id)arg4 startApplicationSnapshot:(id)arg5 endLocation:(id)arg6 endElementSnapshot:(id)arg7 endApplicationSnapshot:(id)arg8;
 - (id)_findBestMatchForElementSnapshot:(id)arg1 inApplicationSnapshot:(id)arg2;
 - (id)_XCT_recordedEventNames:(id)arg1 duration:(id)arg2 startElement:(id)arg3 startApplicationSnapshot:(id)arg4 endElement:(id)arg5 endApplicationSnapshot:(id)arg6;
@@ -60,6 +64,8 @@
 - (id)_methodNameSimpleTargetGestureNames;
 - (void)invalidate;
 - (void)recordTargetProcessPID:(int)arg1 forLanguage:(unsigned long long)arg2 reservedNames:(id)arg3 withBlock:(CDUnknownBlockType)arg4;
+- (unsigned long long)platform;
+@property(readonly) NSArray *defaultAttributes;
 - (id)initWithTransport:(id)arg1;
 
 @end

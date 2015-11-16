@@ -28,8 +28,6 @@ typedef NS_OPTIONS(NSUInteger, XCUIKeyModifierFlags) {
     XCUIKeyModifierCommand    = (1UL << 4),
 };
 
-//...
-
 @class XCUIElementQuery;
 @class XCUICoordinate;
 
@@ -53,8 +51,10 @@ NS_CLASS_AVAILABLE(10_11, 9_0)
 /*! Returns a query for direct children of the element matching the specified type. */
 - (XCUIElementQuery *)childrenMatchingType:(XCUIElementType)type;
 
+#if !TARGET_OS_TV
 /*! Creates and returns a new coordinate that will compute its screen point by adding the offset multiplied by the size of the element’s frame to the origin of the element’s frame. */
 - (XCUICoordinate *)coordinateWithNormalizedOffset:(CGVector)normalizedOffset;
+#endif
 
 /*!
  @discussion
@@ -87,7 +87,8 @@ NS_CLASS_AVAILABLE(10_11, 9_0)
  */
 - (void)typeText:(NSString *)text;
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_TV
+#elif TARGET_OS_IOS
 
 /*!
  * Sends a tap event to a hittable point computed for the element.
@@ -180,7 +181,7 @@ NS_CLASS_AVAILABLE(10_11, 9_0)
  */
 - (void)rotate:(CGFloat)rotation withVelocity:(CGFloat)velocity;
 
-#else
+#elif TARGET_OS_MAC
 
 /*!
  * Moves the cursor over the element.
@@ -243,7 +244,7 @@ NS_CLASS_AVAILABLE(10_11, 9_0)
 
 @end
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IOS
 
 /*! This category on XCUIElement provides functionality for automating the picker wheels of UIPickerViews and UIDatePickers. */
 @interface XCUIElement (XCUIElementTypePickerWheel)

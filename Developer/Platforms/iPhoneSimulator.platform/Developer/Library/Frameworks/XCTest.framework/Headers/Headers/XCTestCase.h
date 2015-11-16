@@ -66,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
     - (void)testSomething;
 
  * Test methods are automatically recognized as test cases by the XCTest framework.
- * Each XCTestCase subclass's defaultTestSuite is a XCTestSuite which includes theses
+ * Each XCTestCase subclass's defaultTestSuite is a XCTestSuite which includes these
  * tests. Test method implementations usually contain assertions that must be verified
  * for the test to pass, for example:
  

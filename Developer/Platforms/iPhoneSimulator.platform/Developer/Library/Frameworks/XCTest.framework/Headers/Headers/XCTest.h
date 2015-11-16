@@ -56,3 +56,4 @@
 #import <XCTest/XCUIElementAttributes.h>
 #import <XCTest/XCUIElementTypeQueryProvider.h>
 #import <XCTest/XCUIKeyboardKeys.h>
+#import <XCTest/XCUIRemote.h>

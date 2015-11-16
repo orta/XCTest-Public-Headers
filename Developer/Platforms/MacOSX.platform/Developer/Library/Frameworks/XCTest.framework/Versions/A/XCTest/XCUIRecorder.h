@@ -17,7 +17,7 @@
     BOOL _isInvalid;
 }
 
-+ (id)iOSRecorderWithTransport:(id)arg1;
++ (id)deviceRecorderWithTransport:(id)arg1;
 + (id)macRecorder;
 + (void)initialize;
 @property(retain) XCSourceCodeRecording *recording; // @synthesize recording=_recording;
@@ -31,7 +31,7 @@
 - (int)launchRecorderProcess;
 - (void)launchRecorderProcessWithBlock:(CDUnknownBlockType)arg1;
 - (BOOL)requiresPermissionForAccessibilityAPIs;
-- (BOOL)loggingEnabled;
+@property(readonly) BOOL loggingEnabled;
 
 @end
 
