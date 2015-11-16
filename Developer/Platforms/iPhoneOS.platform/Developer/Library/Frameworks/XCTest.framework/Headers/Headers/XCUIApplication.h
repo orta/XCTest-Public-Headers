@@ -35,8 +35,6 @@ NS_CLASS_AVAILABLE(10_11, 9_0)
  * Unlike NSTask, it is legal to modify these arguments after the application has been launched. These
  * changes will not affect the current launch session, but will take effect the next time the application
  * is launched.
- *
- * Note: the arguments are reset to the default values for each test case.
  */
 @property (nonatomic, copy) NSArray <NSString *> *launchArguments;
 
@@ -46,8 +44,6 @@ NS_CLASS_AVAILABLE(10_11, 9_0)
  * Unlike NSTask, it is legal to modify the environment after the application has been launched. These
  * changes will not affect the current launch session, but will take effect the next time the application
  * is launched.
- *
- * Note: the environment is reset to the default values for each test case.
  */
 @property (nonatomic, copy) NSDictionary <NSString *, NSString *> *launchEnvironment;
 

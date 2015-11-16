@@ -11,8 +11,15 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  * @class XCTestObservationCenter
  *
- * The XCTestObservationCenter distributes information about the progress of test runs to registered observers. Observers
- * can be any object conforming to the XCTestObservation protocol.
+ * The XCTestObservationCenter distributes information about the progress of test runs to registered
+ * observers. Observers can be any object conforming to the XCTestObservation protocol.
+ *
+ * If an NSPrincipalClass is declared in the test bundle's Info.plist, XCTest automatically creates a
+ * single instance of that class when the test bundle is loaded. This instance provides a means to register
+ * observers or do other pretesting global set up.
+ *
+ * Observers must be registered manually. The NSPrincipalClass instance is not automatically
+ * registered as an observer even if the class conforms to <XCTestObservation>.
  */
 @interface XCTestObservationCenter : NSObject {
 #ifndef __OBJC2__
