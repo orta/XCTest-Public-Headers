@@ -6,12 +6,13 @@
 
 #import "NSObject.h"
 
-@interface SenTestProbe : NSObject
+@interface XCTestProbe : NSObject
 {
 }
 
 + (void)load;
 + (void)initialize;
++ (void)_applicationFinishedLaunching:(id)arg1;
 + (void)runTests:(id)arg1;
 + (void)resumeAppSleep:(id)arg1;
 + (id)suspendAppSleep;
