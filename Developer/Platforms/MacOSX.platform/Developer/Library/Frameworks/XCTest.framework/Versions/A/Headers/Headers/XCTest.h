@@ -33,7 +33,7 @@
 #import <XCTest/XCTestAssertions.h>
 #import <XCTest/XCTestAssertionsImpl.h>
 #import <XCTest/XCTestCase.h>
-#import <XCTest/XCTextCase+AsynchronousTesting.h>
+#import <XCTest/XCTestCase+AsynchronousTesting.h>
 #import <XCTest/XCTestCaseRun.h>
 #import <XCTest/XCTestDefines.h>
 #import <XCTest/XCTestErrors.h>
