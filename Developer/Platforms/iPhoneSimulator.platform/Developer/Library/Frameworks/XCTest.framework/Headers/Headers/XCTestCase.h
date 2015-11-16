@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013-2014 Apple Inc. All rights reserved.
+// Copyright (c) 2013-2015 Apple Inc. All rights reserved.
 //
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -31,6 +31,8 @@
 
 #import <XCTest/XCAbstractTest.h>
 #import <XCTest/XCTestDefines.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 @class XCTestSuite;
 @class XCTestCaseRun;
@@ -98,28 +100,40 @@
 /*!
  * @method +testCaseWithInvocation:
  */
-+ (id)testCaseWithInvocation:(NSInvocation *)invocation;
+#if XCT_NULLABLE_AVAILABLE
++ (instancetype)testCaseWithInvocation:(nullable NSInvocation *)invocation;
+#else
++ (instancetype)testCaseWithInvocation:(NSInvocation *)invocation;
+#endif
 
 /*!
  * @method -initWithInvocation:
  */
-- (id)initWithInvocation:(NSInvocation *)invocation;
+#if XCT_NULLABLE_AVAILABLE
+- (instancetype)initWithInvocation:(nullable NSInvocation *)invocation;
+#else
+- (instancetype)initWithInvocation:(NSInvocation *)invocation;
+#endif
 
 /*!
  * @method +testCaseWithSelector:
  */
-+ (id)testCaseWithSelector:(SEL)selector;
++ (instancetype)testCaseWithSelector:(SEL)selector;
 
 /*!
  * @method -initWithSelector:
  */
-- (id)initWithSelector:(SEL)selector;
+- (instancetype)initWithSelector:(SEL)selector;
 
 /*!
  * @property invocation
  * The invocation used when this test is run.
  */
+#if XCT_NULLABLE_AVAILABLE
+@property (strong, nullable) NSInvocation *invocation;
+#else
 @property (strong) NSInvocation *invocation;
+#endif
 
 /*!
  * @method -invokeTest
@@ -156,7 +170,11 @@
  * @method +testInvocations
  * Invocations for each test method in the test case.
  */
+#if XCT_GENERICS_AVAILABLE
++ (NSArray <NSInvocation *> *)testInvocations;
+#else
 + (NSArray *)testInvocations;
+#endif
 
 #pragma mark - Measuring Performance Metrics
 
@@ -170,7 +188,11 @@ XCT_EXPORT NSString * const XCTPerformanceMetric_WallClockTime;
  * @method +defaultPerformanceMetrics
  * The names of the performance metrics to measure when invoking -measureBlock:. Returns XCTPerformanceMetric_WallClockTime by default. Subclasses can override this to change the behavior of -measureBlock:
  */
+#if XCT_GENERICS_AVAILABLE
++ (NSArray <NSString *> *)defaultPerformanceMetrics;
+#else
 + (NSArray *)defaultPerformanceMetrics;
+#endif
 
 /*!
  * @method -measureBlock:
@@ -230,7 +252,11 @@ XCT_EXPORT NSString * const XCTPerformanceMetric_WallClockTime;
  *
  * @param block A block whose performance to measure.
  */
+#if XCT_GENERICS_AVAILABLE
+- (void)measureMetrics:(NSArray <NSString *> *)metrics automaticallyStartMeasuring:(BOOL)automaticallyStartMeasuring forBlock:(void (^)(void))block;
+#else
 - (void)measureMetrics:(NSArray *)metrics automaticallyStartMeasuring:(BOOL)automaticallyStartMeasuring forBlock:(void (^)(void))block;
+#endif
 
 /*!
  * @method -startMeasuring
@@ -269,3 +295,5 @@ XCT_EXPORT NSString * const XCTPerformanceMetric_WallClockTime;
 + (void)tearDown;
 
 @end
+
+NS_ASSUME_NONNULL_END

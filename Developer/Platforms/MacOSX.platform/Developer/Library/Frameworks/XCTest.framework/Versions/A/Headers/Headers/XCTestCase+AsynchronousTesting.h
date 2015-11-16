@@ -1,8 +1,10 @@
 //
-//  Copyright (c) 2014 Apple Inc. All rights reserved.
+//  Copyright (c) 2014-2015 Apple Inc. All rights reserved.
 //
 
 #import <XCTest/XCTestCase.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 /*!
  * @class XCTestExpectation
@@ -60,7 +62,11 @@
  * If the wait timed out or a failure was raised while waiting, the error's code
  * will specify the type of failure. Otherwise error will be nil.
  */
+#if XCT_NULLABLE_AVAILABLE
+typedef void (^XCWaitCompletionHandler)(NSError * __nullable error);
+#else
 typedef void (^XCWaitCompletionHandler)(NSError *error);
+#endif
 
 /*!
  * @method -waitForExpectationsWithTimeout:handler:
@@ -68,7 +74,7 @@ typedef void (^XCWaitCompletionHandler)(NSError *error);
  * @param timeout
  * The amount of time within which all expectations must be fulfilled.
  *
- * @param handlerOrNil
+ * @param handler
  * If provided, the handler will be invoked both on timeout or fulfillment of all
  * expectations. Timeout is always treated as a test failure.
  *
@@ -81,7 +87,11 @@ typedef void (^XCWaitCompletionHandler)(NSError *error);
  * are fulfilled or the timeout is reached. Clients should not manipulate the run
  * loop while using this API.
  */
-- (void)waitForExpectationsWithTimeout:(NSTimeInterval)timeout handler:(XCWaitCompletionHandler)handlerOrNil;
+#if XCT_NULLABLE_AVAILABLE
+- (void)waitForExpectationsWithTimeout:(NSTimeInterval)timeout handler:(nullable XCWaitCompletionHandler)handler;
+#else
+- (void)waitForExpectationsWithTimeout:(NSTimeInterval)timeout handler:(XCWaitCompletionHandler)handler;
+#endif
 
 #pragma mark Convenience APIs
 
@@ -108,7 +118,11 @@ typedef void (^XCWaitCompletionHandler)(NSError *error);
  * @return
  * Creates and returns an expectation associated with the test case.
  */
+#if XCT_NULLABLE_AVAILABLE
+- (XCTestExpectation *)keyValueObservingExpectationForObject:(id)objectToObserve keyPath:(NSString *)keyPath expectedValue:(nullable id)expectedValue;
+#else
 - (XCTestExpectation *)keyValueObservingExpectationForObject:(id)objectToObserve keyPath:(NSString *)keyPath expectedValue:(id)expectedValue;
+#endif
 
 /*!
  * @typedef
@@ -140,14 +154,18 @@ typedef BOOL (^XCKeyValueObservingExpectationHandler)(id observedObject, NSDicti
  * @param keyPath
  * The key path to observe.
  *
- * @param handlerOrNil
+ * @param handler
  * Optional handler, /see XCKeyValueObservingExpectationHandler. If not provided, the expectation will
  * be fulfilled by the first change to the key path of the observed object.
  *
  * @return
  * Creates and returns an expectation associated with the test case.
  */
-- (XCTestExpectation *)keyValueObservingExpectationForObject:(id)objectToObserve keyPath:(NSString *)keyPath handler:(XCKeyValueObservingExpectationHandler)handlerOrNil;
+#if XCT_NULLABLE_AVAILABLE
+- (XCTestExpectation *)keyValueObservingExpectationForObject:(id)objectToObserve keyPath:(NSString *)keyPath handler:(nullable XCKeyValueObservingExpectationHandler)handler;
+#else
+- (XCTestExpectation *)keyValueObservingExpectationForObject:(id)objectToObserve keyPath:(NSString *)keyPath handler:(XCKeyValueObservingExpectationHandler)handler;
+#endif
 
 /*!
  * @typedef
@@ -174,7 +192,7 @@ typedef BOOL (^XCNotificationExpectationHandler)(NSNotification *notification);
  * @param objectToObserve
  * The object to observe.
  *
- * @param handlerOrNil
+ * @param handler
  * Optional handler, /see XCNotificationExpectationHandler. If not provided, the expectation
  * will be fulfilled by the first notification matching the specified name from the
  * observed object.
@@ -182,7 +200,32 @@ typedef BOOL (^XCNotificationExpectationHandler)(NSNotification *notification);
  * @return
  * Creates and returns an expectation associated with the test case.
  */
-- (XCTestExpectation *)expectationForNotification:(NSString *)notificationName object:(id)objectToObserve handler:(XCNotificationExpectationHandler)handlerOrNil;
+#if XCT_NULLABLE_AVAILABLE
+- (XCTestExpectation *)expectationForNotification:(NSString *)notificationName object:(nullable id)objectToObserve handler:(nullable XCNotificationExpectationHandler)handler;
+#else
+- (XCTestExpectation *)expectationForNotification:(NSString *)notificationName object:(id)objectToObserve handler:(XCNotificationExpectationHandler)handler;
+#endif
+
+/*!
+ * @typedef
+ * Handler called when evaluating the predicate against the object returns true. If the handler is not
+ * provided the first successful evaluation will fulfill the expectation. If provided, the handler can
+ * override that behavior which leaves the caller responsible for fulfilling the expectation.
+ */
+typedef BOOL (^XCPredicateExpectationHandler)();
+
+/*!
+ * @method expectationForPredicate:evaluatedWithObject:handler:
+ * Creates an expectation that is fulfilled if the predicate returns true when evaluated with the given
+ * object. The expectation periodically evaluates the predicate and also may use notifications or other
+ * events to optimistically re-evaluate.
+ */
+#if XCT_NULLABLE_AVAILABLE
+- (XCTestExpectation *)expectationForPredicate:(NSPredicate *)predicate evaluatedWithObject:(id)object handler:(nullable XCPredicateExpectationHandler)handler;
+#else
+- (XCTestExpectation *)expectationForPredicate:(NSPredicate *)predicate evaluatedWithObject:(id)object handler:(XCPredicateExpectationHandler)handler;
+#endif
 
 @end
 
+NS_ASSUME_NONNULL_END

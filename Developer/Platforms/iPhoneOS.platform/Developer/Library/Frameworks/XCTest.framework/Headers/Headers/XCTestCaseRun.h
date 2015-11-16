@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013 Apple Inc. All rights reserved.
+// Copyright (c) 2013-2015 Apple Inc. All rights reserved.
 //
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -31,6 +31,8 @@
 
 #import <XCTest/XCTestRun.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class XCTestCase;
 
 @interface XCTestCaseRun : XCTestRun
@@ -38,3 +40,5 @@
 - (void)recordFailureInTest:(XCTestCase *)testCase withDescription:(NSString *)description inFile:(NSString *)filePath atLine:(NSUInteger)lineNumber expected:(BOOL)expected DEPRECATED_ATTRIBUTE;
 
 @end
+
+NS_ASSUME_NONNULL_END

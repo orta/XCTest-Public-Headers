@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013-2014 Apple Inc. All rights reserved.
+// Copyright (c) 2013-2015 Apple Inc. All rights reserved.
 //
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -29,7 +29,9 @@
 // 
 // This notice may not be removed from this file.
 
-#import <Foundation/Foundation.h>
+#import <XCTest/XCTestDefines.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 @class XCTestRun;
 
@@ -40,7 +42,12 @@
  * for creating, managing, and executing tests. Most developers will not need to subclass
  * XCTest directly.
  */
-@interface XCTest : NSObject
+@interface XCTest : NSObject {
+#ifndef __OBJC2__
+@private
+    id _internal;
+#endif
+}
 
 /*!
  * @property testCaseCount
@@ -62,6 +69,16 @@
 @property (readonly) Class testRunClass;
 
 /*!
+ * @property testRun
+ * The test run object that executed the test, an instance of testRunClass. If the test has not yet been run, this will be nil.
+ */
+#if XCT_NULLABLE_AVAILABLE
+@property (readonly, nullable) XCTestRun *testRun;
+#else
+@property (readonly) XCTestRun *testRun;
+#endif
+
+/*!
  * @method -performTest:
  * The method through which tests are executed. Must be overridden by subclasses.
  */
@@ -69,9 +86,15 @@
 
 /*!
  * @method -run
- * Creates an instance of the testRunClass and passes it as a parameter to the performTest method.
+ * Deprecated: use -runTest instead.
  */
-- (XCTestRun *)run;
+- (XCTestRun *)run DEPRECATED_ATTRIBUTE;
+
+/*!
+ * @method -runTest
+ * Creates an instance of the testRunClass and passes it as a parameter to -performTest:.
+ */
+- (void)runTest;
 
 /*!
  * @method -setUp
@@ -86,3 +109,5 @@
 - (void)tearDown;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013-2014 Apple Inc. All rights reserved.
+// Copyright (c) 2013-2015 Apple Inc. All rights reserved.
 //
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -32,10 +32,16 @@
 #import <XCTest/XCTestCase.h>
 #import <XCTest/XCTestDefines.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface _XCTestCaseInterruptionException : NSException
 @end
 
-XCT_EXPORT void _XCTFailureHandler(XCTestCase *test, BOOL expected, const char *filePath, NSUInteger lineNumber, NSString * condition, NSString * format, ...) NS_FORMAT_FUNCTION(6,7);
+#if XCT_NULLABLE_AVAILABLE
+XCT_EXPORT void _XCTFailureHandler(XCTestCase *test, BOOL expected, const char *filePath, NSUInteger lineNumber, NSString *condition, NSString * __nullable format, ...) NS_FORMAT_FUNCTION(6,7);
+#else
+XCT_EXPORT void _XCTFailureHandler(XCTestCase *test, BOOL expected, const char *filePath, NSUInteger lineNumber, NSString *condition, NSString *format, ...) NS_FORMAT_FUNCTION(6,7);
+#endif
 
 XCT_EXPORT void _XCTPreformattedFailureHandler(XCTestCase *test, BOOL expected, NSString *filePath, NSUInteger lineNumber, NSString *condition, NSString *message);
 
@@ -83,6 +89,8 @@ XCT_EXPORT NSString * _XCTFailureFormat (_XCTAssertionType assertionType, NSUInt
 #pragma mark -
 
 XCT_EXPORT NSString * _XCTDescriptionForValue (NSValue *value);
+
+NS_ASSUME_NONNULL_END
 
 #pragma mark -
 

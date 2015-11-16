@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2013-2014 Apple Inc. All rights reserved.
+// Copyright (c) 2013-2015 Apple Inc. All rights reserved.
 //
 // Copyright (c) 1997-2005, Sen:te (Sente SA).  All rights reserved.
 //
@@ -31,6 +31,8 @@
 
 #import <XCTest/XCAbstractTest.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /*!
  * @class XCTestSuite
  * A concrete subclass of XCTest, XCTestSuite is a collection of test cases. Suites
@@ -58,20 +60,31 @@
 #ifndef __OBJC2__
 @private
     NSString *_name;
+#if XCT_GENERICS_AVAILABLE
+    NSMutableArray <__kindof XCTest *> *_tests;
+#else
     NSMutableArray *_tests;
+#endif
 #endif
 }
 
-+ (id)defaultTestSuite;
-+ (id)testSuiteForBundlePath:(NSString *)bundlePath;
-+ (id)testSuiteForTestCaseWithName:(NSString *)name;
-+ (id)testSuiteForTestCaseClass:(Class)testCaseClass;
++ (instancetype)defaultTestSuite;
++ (instancetype)testSuiteForBundlePath:(NSString *)bundlePath;
++ (instancetype)testSuiteForTestCaseWithName:(NSString *)name;
++ (instancetype)testSuiteForTestCaseClass:(Class)testCaseClass;
 
-+ (id)testSuiteWithName:(NSString *)name;
-- (id)initWithName:(NSString *)name;
++ (instancetype)testSuiteWithName:(NSString *)name;
+- (instancetype)initWithName:(NSString *)name;
 
 - (void)addTest:(XCTest *)test;
 
+#if XCT_GENERICS_AVAILABLE
+@property (readonly, copy) NSArray <__kindof XCTest *> *tests;
+#else
 @property (readonly, copy) NSArray *tests;
+#endif
 
 @end
+
+NS_ASSUME_NONNULL_END
+
