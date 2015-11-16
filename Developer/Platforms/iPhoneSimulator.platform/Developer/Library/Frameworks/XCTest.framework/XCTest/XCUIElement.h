@@ -142,6 +142,9 @@
 - (void)tap;
 - (struct CGPoint)_hitPointByAttemptingToScrollToVisibleSnapshot:(id)arg1;
 - (void)_dispatchEvent:(id)arg1 block:(CDUnknownBlockType)arg2;
+@property(readonly) double normalizedSliderPosition;
+- (void)adjustToNormalizedSliderPosition:(double)arg1;
+- (void)adjustToPickerWheelValue:(id)arg1;
 
 @end
 

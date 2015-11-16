@@ -6,13 +6,12 @@
 
 #import <XCTest/XCUIElement.h>
 
-#import "XCTestObservation.h"
-
 @class NSArray, NSDictionary, NSString, XCAccessibilityElement, XCApplicationQuery;
 
-@interface XCUIApplication : XCUIElement <XCTestObservation>
+@interface XCUIApplication : XCUIElement
 {
     _Bool _accessibilityActive;
+    _Bool _ancillary;
     _Bool _eventLoopIsIdle;
     int _processID;
     unsigned long long _state;
@@ -32,6 +31,7 @@
 @property(retain) XCApplicationQuery *applicationQuery; // @synthesize applicationQuery=_applicationQuery;
 @property(readonly, copy) NSString *bundleID; // @synthesize bundleID=_bundleID;
 @property(readonly, copy) NSString *path; // @synthesize path=_path;
+@property _Bool ancillary; // @synthesize ancillary=_ancillary;
 @property(nonatomic) _Bool accessibilityActive; // @synthesize accessibilityActive=_accessibilityActive;
 @property(copy, nonatomic) NSDictionary *launchEnvironment; // @synthesize launchEnvironment=_launchEnvironment;
 @property(copy, nonatomic) NSArray *launchArguments; // @synthesize launchArguments=_launchArguments;
@@ -45,24 +45,19 @@
 - (void)launch;
 - (void)_waitForLaunchProgressViaProxy:(id)arg1;
 - (void)_waitForLaunchTokenViaProxy:(id)arg1;
-- (void)testCaseWillStart:(id)arg1;
 - (id)application;
 @property(readonly, nonatomic) _Bool running;
 @property(nonatomic) int processID; // @synthesize processID=_processID;
 @property unsigned long long state; // @synthesize state=_state;
-@property(readonly, copy) NSString *description;
+- (id)description;
 - (id)lastSnapshot;
 - (id)query;
+- (void)clearQuery;
 @property(readonly) XCAccessibilityElement *accessibilityElement;
 - (unsigned long long)elementType;
 - (id)initPrivateWithPath:(id)arg1 bundleID:(id)arg2;
 - (id)init;
 - (void)dealloc;
-
-// Remaining properties
-@property(readonly, copy) NSString *debugDescription;
-@property(readonly) unsigned long long hash;
-@property(readonly) Class superclass;
 
 @end
 

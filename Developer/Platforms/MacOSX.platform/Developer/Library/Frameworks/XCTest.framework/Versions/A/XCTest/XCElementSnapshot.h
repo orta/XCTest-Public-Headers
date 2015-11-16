@@ -85,6 +85,7 @@
 @property(nonatomic) XCUIApplication *application; // @synthesize application=_application;
 - (id)init;
 - (void)dealloc;
+@property(readonly) XCElementSnapshot *window;
 @property(readonly) struct CGPoint hitPointForScrolling;
 @property(readonly) struct CGPoint hitPoint;
 - (id)hitTest:(struct CGPoint)arg1;

@@ -10,12 +10,11 @@
 
 @interface XCApplicationQuery : XCUIElementQuery
 {
-    XCUIApplication *_weakApplication;
+    XCUIApplication *_application;
     XCElementSnapshot *_lastSnapshot;
 }
 
 @property(retain) XCElementSnapshot *lastSnapshot; // @synthesize lastSnapshot=_lastSnapshot;
-@property XCUIApplication *weakApplication; // @synthesize weakApplication=_weakApplication;
 - (id)matchingSnapshotsWithError:(id *)arg1;
 - (id)application;
 - (id)initWithApplication:(id)arg1;

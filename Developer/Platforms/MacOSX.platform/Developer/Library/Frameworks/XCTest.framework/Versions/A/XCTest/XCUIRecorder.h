@@ -28,6 +28,9 @@
 - (void)invalidate;
 - (void)recordTargetProcessPID:(int)arg1 forLanguage:(unsigned long long)arg2 withBlock:(CDUnknownBlockType)arg3;
 - (void)recordTargetProcessPID:(int)arg1 forLanguage:(unsigned long long)arg2 reservedNames:(id)arg3 withBlock:(CDUnknownBlockType)arg4;
+- (int)launchRecorderProcess;
+- (void)launchRecorderProcessWithBlock:(CDUnknownBlockType)arg1;
+- (BOOL)requiresPermissionForAccessibilityAPIs;
 - (BOOL)loggingEnabled;
 
 @end

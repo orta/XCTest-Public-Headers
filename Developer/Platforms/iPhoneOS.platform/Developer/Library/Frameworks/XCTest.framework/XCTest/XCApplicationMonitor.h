@@ -6,9 +6,11 @@
 
 #import "NSObject.h"
 
-@class NSMutableDictionary, NSObject<OS_dispatch_queue>;
+#import "XCTestObservation.h"
 
-@interface XCApplicationMonitor : NSObject
+@class NSArray, NSMutableDictionary, NSObject<OS_dispatch_queue>, NSString;
+
+@interface XCApplicationMonitor : NSObject <XCTestObservation>
 {
     NSMutableDictionary *_launchSessionTokens;
     NSObject<OS_dispatch_queue> *_queue;
@@ -16,13 +18,21 @@
 
 + (id)sharedMonitor;
 @property NSObject<OS_dispatch_queue> *queue; // @synthesize queue=_queue;
+@property(readonly, copy) NSArray *allMonitoredApplications;
+- (void)testCaseWillStart:(id)arg1;
+- (id)monitoredApplicationWithProcessIdentifier:(int)arg1;
 - (id)launchSessionTokenForApplication:(id)arg1;
 - (void)setLaunchSessionToken:(id)arg1 forApplication:(id)arg2;
 - (void)applicationWithBundleID:(id)arg1 didUpdatePID:(int)arg2 andState:(unsigned long long)arg3;
 - (void)setAccessibilityActive:(_Bool)arg1 forApplicationWithPID:(int)arg2;
-- (void)stopMonitoringApplication:(id)arg1;
 - (void)beginMonitoringApplication:(id)arg1;
 - (id)init;
+
+// Remaining properties
+@property(readonly, copy) NSString *debugDescription;
+@property(readonly, copy) NSString *description;
+@property(readonly) unsigned long long hash;
+@property(readonly) Class superclass;
 
 @end
 

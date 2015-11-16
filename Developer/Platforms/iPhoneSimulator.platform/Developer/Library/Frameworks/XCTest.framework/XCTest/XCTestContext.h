@@ -10,10 +10,12 @@
 
 @interface XCTestContext : NSObject
 {
+    _Bool _didHandleUIInterruption;
     XCTestContextScope *_currentScope;
 }
 
 + (CDUnknownBlockType)defaultAsynchronousUIElementHandler;
+@property _Bool didHandleUIInterruption; // @synthesize didHandleUIInterruption=_didHandleUIInterruption;
 @property(retain, nonatomic) XCTestContextScope *currentScope; // @synthesize currentScope=_currentScope;
 - (_Bool)handleAsynchronousUIElement:(id)arg1;
 - (void)removeUIInterruptionMonitor:(id)arg1;

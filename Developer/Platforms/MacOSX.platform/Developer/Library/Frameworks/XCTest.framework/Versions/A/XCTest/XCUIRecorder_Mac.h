@@ -16,6 +16,9 @@
 }
 
 - (void)recordTargetProcessPID:(int)arg1 forLanguage:(unsigned long long)arg2 reservedNames:(id)arg3 withBlock:(CDUnknownBlockType)arg4;
+- (void)_recordTargetProcessPID:(int)arg1;
+- (void)launchRecorderProcessWithBlock:(CDUnknownBlockType)arg1;
+- (BOOL)requiresPermissionForAccessibilityAPIs;
 - (void)_fetchEventSnapshots;
 - (void)invalidate;
 

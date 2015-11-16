@@ -14,9 +14,10 @@
     NSHashTable *_observedApplications;
 }
 
+- (id)allMonitoredApplications;
 - (void)observeValueForKeyPath:(id)arg1 ofObject:(id)arg2 change:(id)arg3 context:(void *)arg4;
 - (void)handleWorkspaceNotification:(id)arg1;
-- (void)stopMonitoringApplication:(id)arg1;
+- (id)monitoredApplicationWithProcessIdentifier:(int)arg1;
 - (void)beginMonitoringApplication:(id)arg1;
 - (id)_runningApplicationMatchingXCApplication:(id)arg1;
 - (void)_updateXCApplication:(id)arg1 fromNSRunningApplication:(id)arg2;

@@ -14,6 +14,7 @@
 - (void)pressLockButton;
 - (void)holdHomeButtonForDuration:(double)arg1;
 - (void)pressButton:(long long)arg1;
+- (void)_silentPressButton:(long long)arg1;
 - (void)_dispatchEventWithPage:(unsigned int)arg1 usage:(unsigned int)arg2 duration:(double)arg3;
 @property(nonatomic) long long orientation;
 

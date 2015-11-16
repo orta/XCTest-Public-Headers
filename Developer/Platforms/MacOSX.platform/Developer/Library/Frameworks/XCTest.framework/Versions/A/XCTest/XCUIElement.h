@@ -137,8 +137,8 @@
 - (void)hover;
 - (struct CGPoint)_hitPointByAttemptingToScrollToVisibleSnapshot:(id)arg1;
 - (void)_dispatchEvent:(id)arg1 block:(CDUnknownBlockType)arg2;
-- (void)typeText:(id)arg1 modifiers:(unsigned long long)arg2;
-- (void)clickAndDragFromPoint:(CDStruct_c3b9c2ee)arg1 toPoint:(CDStruct_c3b9c2ee)arg2;
+@property(readonly) double normalizedSliderPosition;
+- (void)adjustToNormalizedSliderPosition:(double)arg1;
 
 @end
 

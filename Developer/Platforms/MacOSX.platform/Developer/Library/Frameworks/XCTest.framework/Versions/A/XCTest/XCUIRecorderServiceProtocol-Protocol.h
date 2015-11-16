@@ -4,9 +4,12 @@
 //     class-dump is Copyright (C) 1997-1998, 2000-2001, 2004-2013 by Steve Nygard.
 //
 
+@class NSString;
+
 @protocol XCUIRecorderServiceProtocol
 - (void)fetchSourceCodeTreeNodesWithReply:(void (^)(NSArray *, BOOL, NSString *))arg1;
 - (void)stopRecordingWithReply:(void (^)(NSString *))arg1;
 - (void)startRecordingWithHostXcodePID:(int)arg1 targetProcessPID:(int)arg2 language:(unsigned long long)arg3 reply:(void (^)(NSString *))arg4;
+- (void)launchWithInput:(NSString *)arg1 reply:(void (^)(NSString *))arg2;
 @end
 

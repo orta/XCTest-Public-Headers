@@ -14,7 +14,8 @@
     NSMutableDictionary *_AXActiveForPID;
 }
 
-- (void)stopMonitoringApplication:(id)arg1;
+- (id)allMonitoredApplications;
+- (id)monitoredApplicationWithProcessIdentifier:(int)arg1;
 - (void)beginMonitoringApplication:(id)arg1;
 - (void)applicationWithBundleID:(id)arg1 didUpdatePID:(int)arg2 andState:(unsigned long long)arg3;
 - (void)setAccessibilityActive:(_Bool)arg1 forApplicationWithPID:(int)arg2;

@@ -85,6 +85,7 @@
 - (void)_configureTimeoutForInterval:(double)arg1 forWaitAtAddress:(unsigned long long)arg2 testClassName:(id)arg3 testMethodName:(id)arg4;
 - (void)_completeWithResult:(id)arg1;
 - (id)expectationWithDescription:(id)arg1;
+- (id)_expectationForDarwinNotification:(id)arg1;
 
 @end
 
